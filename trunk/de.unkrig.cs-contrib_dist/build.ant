@@ -1,0 +1,113 @@
+<project default="default">
+	<target name="default" depends="build,publish,tag"/>
+
+	<target name="build" description="Builds plugins, feature and update site in './mirror'">
+		<delete dir="mirror"/>
+
+		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
+		<property name="version" value="1.0.0.${qualifier}"/>
+
+		<!-- Build plugin 'de.unkrig.cs-contrib.branding' -->
+
+		<delete dir="tmp"/>
+		<copy file="../de.unkrig.cs-contrib.branding/META-INF/MANIFEST.MF" todir="tmp/META-INF">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.branding_${version}.jar">
+			<fileset dir="../de.unkrig.cs-contrib.branding" includes="plugin.xml,about.*,*.gif"/>
+			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<!-- Build plugin 'de.unkrig.cs-contrib.core' -->
+
+		<delete dir="tmp"/>
+		<copy file="../de.unkrig.cs-contrib.core/META-INF/MANIFEST.MF" todir="tmp/META-INF">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.core_${version}.jar">
+			<fileset dir="../de.unkrig.cs-contrib.core" includes="plugin.xml,about.html,icons/**,lib/**"/>
+			<fileset dir="../de.unkrig.cs-contrib.core/bin"/>
+			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<!-- Build feature 'de.unkrig.cs-contrib' -->
+
+		<delete dir="tmp"/>
+		<copy file="templates/features/de.unkrig.cs-contrib/feature.xml" todir="tmp">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/features/de.unkrig.cs-contrib_${version}.jar">
+			<fileset dir="tmp" includes="feature.xml"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<!-- Build update site -->
+
+		<copy file="templates/update/site.xml" todir="mirror/update">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+	</target>
+
+	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
+		<property name="ftp.server" value="www.unkrig.de"/>
+		<property name="ftp.userid" value="www.unkrig.de"/>
+		<input addproperty="ftp.password" message="Password for ${ftp.userid}@${ftp.server}:"/>
+		<ftp
+			server="${ftp.server}"
+			userid="${ftp.userid}"
+			password="${ftp.password}"
+			passive="true"
+			action="put"
+			remotedir="cs-contrib"
+			verbose="true"
+		>
+			<fileset dir="mirror"/>
+		</ftp>
+	</target>
+
+	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
+
+		<!-- Extract the version from 'site.xml'. -->
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
+		<property name="version" value="${site.xml.site.feature(version)}"/>
+
+		<typedef resource="org/tigris/subversion/svnant/svnantlib.xml">
+			<classpath>
+				<fileset dir="lib">
+					<include name="svnant.jar"/>
+					<include name="svnClientAdapter.jar"/>
+					<include name="svnjavahl.jar"/>
+					<include name="svnkit.jar"/>
+				</fileset>
+			</classpath>
+		</typedef>
+
+		<property name="svn.username" value="mecki"/>
+		<input addproperty="svn.password" message="Password for &quot;${svn.username}@loggifier.svn.sourceforge.net&quot;:"/>
+		<svnSetting
+			javahl="false"
+			svnkit="true"
+			id="svn.settings"
+			username="${svn.username}"
+			password="${svn.password}"
+		/>
+
+		<property name="tag" value="cs-contrib_${version}"/>
+		<echo message="Tagging relevant projects as '${tag}'..."/>
+
+		<!--
+			NOTICE: SVNANT's COPY command currently ignores the REVISION attribute when the SRCPATH attribute is set,
+			which is bad because we mean the BASE version and not the WC.
+			See http://subclipse.tigris.org/source/browse/subclipse/trunk/svnant/src/main/org/tigris/subversion/svnant/commands/Copy.java?revision=4988&view=markup
+		-->
+		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
+		<svn refid="svn.settings">
+			<mkdir                                                                 url="${d}" message="-"/>
+			<copy srcpath="../de.unkrig.cs-contrib_dist"       revision="BASE" desturl="${d}" message="-"/>
+			<copy srcpath="../de.unkrig.cs-contrib.branding"   revision="BASE" desturl="${d}" message="-"/>
+			<copy srcpath="../de.unkrig.cs-contrib.core"       revision="BASE" desturl="${d}" message="-"/>
+		</svn>
+	</target>
+</project>
