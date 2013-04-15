@@ -4,8 +4,10 @@
 	<target name="build" description="Builds plugins, feature and update site in './mirror'">
 		<delete dir="mirror"/>
 
+		<!-- Set the version name -->
+
 		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
-		<property name="version" value="1.0.0.${qualifier}"/>
+		<property name="version" value="1.0.1.${qualifier}"/>
 
 		<!-- Build plugin 'de.unkrig.cs-contrib.branding' -->
 
@@ -51,9 +53,15 @@
 	</target>
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
+
 		<property name="ftp.server" value="www.unkrig.de"/>
 		<property name="ftp.userid" value="www.unkrig.de"/>
 		<input addproperty="ftp.password" message="Password for ${ftp.userid}@${ftp.server}:"/>
+
+		<!--
+			Currently no way is known to configure an FTP proxy - environment variable
+			"ANT_OPTS=-Dftp.proxyHost=proxy.swm.de -Dftp.proxyPort=8080" does not work, nor the <setproxy> task.
+		-->
 		<ftp
 			server="${ftp.server}"
 			userid="${ftp.userid}"
@@ -69,10 +77,21 @@
 
 	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
 
-		<!-- Extract the version from 'site.xml'. -->
+		<!-- Determine the version from the feature version in the mirrored 'site.xml' file. -->
+
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
 		<property name="version" value="${site.xml.site.feature(version)}"/>
 
+		<!-- Compose the tag name from the feature name and the version. -->
+
+		<property name="tag" value="cs-contrib_${version}"/>
+		<echo message="Tagging relevant projects as '${tag}'..."/>
+
+		<!--
+			Unfortunately, ECLIPSE's own SVN client (org.tigris.subclipse) does not provide an
+			'org.eclipse.ant.core.anttasks' extension that would allow ANT scripts to use it, so we have to use
+			SVNANT (http://subclipse.tigris.org/svnant.html).
+		-->
 		<typedef resource="org/tigris/subversion/svnant/svnantlib.xml">
 			<classpath>
 				<fileset dir="lib">
@@ -86,6 +105,7 @@
 
 		<property name="svn.username" value="mecki"/>
 		<input addproperty="svn.password" message="Password for &quot;${svn.username}@loggifier.svn.sourceforge.net&quot;:"/>
+
 		<svnSetting
 			javahl="false"
 			svnkit="true"
@@ -93,9 +113,6 @@
 			username="${svn.username}"
 			password="${svn.password}"
 		/>
-
-		<property name="tag" value="cs-contrib_${version}"/>
-		<echo message="Tagging relevant projects as '${tag}'..."/>
 
 		<!--
 			NOTICE: SVNANT's COPY command currently ignores the REVISION attribute when the SRCPATH attribute is set,
