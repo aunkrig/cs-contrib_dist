@@ -7,9 +7,7 @@
       plugin="de.unkrig.cs-contrib.branding">
 
    <description>
-      Additional checks, filters and quickfixes for
-      CheckStyle (http://checkstyle.sourceforge.net/) and
-      Eclipse-CS (http://eclipse-cs.sourceforge.net/).
+Additional checks, filters and quickfixes for CheckStyle (http://checkstyle.sourceforge.net/) and Eclipse-CS (http://eclipse-cs.sourceforge.net/).
    </description>
 
    <copyright>
