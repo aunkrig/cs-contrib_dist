@@ -87,44 +87,16 @@
 		<property name="tag" value="cs-contrib_${version}"/>
 		<echo message="Tagging relevant projects as '${tag}'..."/>
 
-		<!--
-			Unfortunately, ECLIPSE's own SVN client (org.tigris.subclipse) does not provide an
-			'org.eclipse.ant.core.anttasks' extension that would allow ANT scripts to use it, so we have to use
-			SVNANT (http://subclipse.tigris.org/svnant.html).
-		-->
-		<typedef resource="org/tigris/subversion/svnant/svnantlib.xml">
-			<classpath>
-				<fileset dir="lib">
-					<include name="svnant.jar"/>
-					<include name="svnClientAdapter.jar"/>
-					<include name="svnjavahl.jar"/>
-					<include name="svnkit.jar"/>
-				</fileset>
-			</classpath>
-		</typedef>
+		<fail unless="eclipse.running" message="Please select the ECLIPSE external tool configuration option 'Run in the same JRE as the workspace'."/>
+		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn"/></condition>
+		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'."/>
 
-		<property name="svn.username" value="mecki"/>
-		<input addproperty="svn.password" message="Password for &quot;${svn.username}@loggifier.svn.sourceforge.net&quot;:"/>
-
-		<svnSetting
-			javahl="false"
-			svnkit="true"
-			id="svn.settings"
-			username="${svn.username}"
-			password="${svn.password}"
-		/>
-
-		<!--
-			NOTICE: SVNANT's COPY command currently ignores the REVISION attribute when the SRCPATH attribute is set,
-			which is bad because we mean the BASE version and not the WC.
-			See http://subclipse.tigris.org/source/browse/subclipse/trunk/svnant/src/main/org/tigris/subversion/svnant/commands/Copy.java?revision=4988&view=markup
-		-->
 		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
-		<svn refid="svn.settings">
-			<mkdir                                                                 url="${d}" message="-"/>
-			<copy srcpath="../de.unkrig.cs-contrib_dist"       revision="BASE" desturl="${d}" message="-"/>
-			<copy srcpath="../de.unkrig.cs-contrib.branding"   revision="BASE" desturl="${d}" message="-"/>
-			<copy srcpath="../de.unkrig.cs-contrib.core"       revision="BASE" desturl="${d}" message="-"/>
-		</svn>
+		<de.unkrig.subclipse.svn>
+			<mkdir                                                 url="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib_dist"       desturl="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib.branding"   desturl="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib.core"       desturl="${d}"/>
+		</de.unkrig.subclipse.svn>
 	</target>
 </project>
