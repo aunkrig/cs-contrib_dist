@@ -59,8 +59,8 @@
 		<input addproperty="ftp.password" message="Password for ${ftp.userid}@${ftp.server}:"/>
 
 		<!--
-			Currently no way is known to configure an FTP proxy - environment variable
-			"ANT_OPTS=-Dftp.proxyHost=proxy.swm.de -Dftp.proxyPort=8080" does not work, nor the <setproxy> task.
+			Currently the FTP ANT task does not support proxies - see
+			https://issues.apache.org/bugzilla/show_bug.cgi?id=54883
 		-->
 		<ftp
 			server="${ftp.server}"
@@ -92,6 +92,10 @@
 		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'."/>
 
 		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
+		<!--
+			Currently it is only possible to copy the WORKING COPY, and not the BASE version - due to a limitation in
+			svnClientAdapter. See http://subclipse.tigris.org/issues/show_bug.cgi?id=1505
+		-->
 		<de.unkrig.subclipse.svn>
 			<mkdir                                                 url="${d}"/>
 			<copy srcpath="../de.unkrig.cs-contrib_dist"       desturl="${d}"/>
