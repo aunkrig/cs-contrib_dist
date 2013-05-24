@@ -7,7 +7,7 @@
 		<!-- Set the version name -->
 
 		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
-		<property name="version" value="1.0.3.${qualifier}"/>
+		<property name="version" value="1.0.4.${qualifier}"/>
 
 		<!-- Build plugin 'de.unkrig.cs-contrib.branding' -->
 
