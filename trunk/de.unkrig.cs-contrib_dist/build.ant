@@ -1,13 +1,26 @@
 <project default="default">
 	<target name="default" depends="build,publish,tag"/>
 
+	<property file="local_build.properties"/>
+	<property file="build.properties"/>
+
+	<taskdef
+		classpath="lib/de.unkrig.ant-contrib.jar"
+		resource="de/unkrig/antcontrib/ant.properties"
+	/>
+
+	<taskdef
+		classpath="lib/ant_issue_54883.jar"
+		resource="ant_issue_54883.properties"
+	/>
+
 	<target name="build" description="Builds plugins, feature and update site in './mirror'">
 		<delete dir="mirror"/>
 
 		<!-- Set the version name -->
 
 		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
-		<property name="version" value="1.0.4.${qualifier}"/>
+		<property name="version" value="${base.version}.${qualifier}"/>
 
 		<!-- Build plugin 'de.unkrig.cs-contrib.branding' -->
 
@@ -54,25 +67,37 @@
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
-		<property name="ftp.server" value="www.unkrig.de"/>
-		<property name="ftp.userid" value="www.unkrig.de"/>
-		<input addproperty="ftp.password" message="Password for ${ftp.userid}@${ftp.server}:"/>
+		<!-- Have the FTP parameters entered/confirmed by the user. -->
+		<de.unkrig.ant-contrib.swing-dialog title="FTP upload of update site">
+			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
+			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}"/>
+			<label text="User ID:"                  /><text property="ftp.userid"         defaultvalue="${ftp.userid}"/>
+			<label text="Password:"                 /><text property="ftp.password"       defaultvalue="${ftp.password}" secure="true"/>
+			<label text="Proxy server (optional):"  /><text property="ftp.proxy.server"   defaultvalue="${ftp.proxy.server}"/>
+			<label text="Proxy port (optional):"    /><text property="ftp.proxy.port"     defaultvalue="${ftp.proxy.port}"/>
+			<label text="Proxy user ID (optional):" /><text property="ftp.proxy.userid"   defaultvalue="${ftp.proxy.userid}"/>
+			<label text="Proxy password (optional):"/><text property="ftp.proxy.password" defaultvalue="${ftp.proxy.password}" secure="true"/>
+			<label text="Remote directory:"         /><text property="ftp.remotedir"      defaultvalue="${ftp.remotedir}"/>
+			<checkbox text="Use passive FTP"   property="ftp.passive" defaultvalue="true"/>
+			<checkbox text="Verbose reporting" property="ftp.verbose" defaultvalue="true"/>
+		</de.unkrig.ant-contrib.swing-dialog>
 
-		<!--
-			Currently the FTP ANT task does not support proxies - see
-			https://issues.apache.org/bugzilla/show_bug.cgi?id=54883
-		-->
-		<ftp
-			server="${ftp.server}"
-			userid="${ftp.userid}"
-			password="${ftp.password}"
-			passive="true"
-			action="put"
-			remotedir="cs-contrib"
-			verbose="true"
+		<ftp2
+			server       ="${ftp.server}"
+			port         ="${ftp.port}"
+			userid       ="${ftp.userid}"
+			password     ="${ftp.password}"
+			proxyServer  ="${ftp.proxy.server}"
+			proxyPort    ="${ftp.proxy.port}"
+			proxyUserid  ="${ftp.proxy.userid}"
+			proxyPassword="${ftp.proxy.password}"
+			remotedir    ="${ftp.remotedir}"
+			passive      ="${ftp.passive}"
+			verbose      ="${ftp.verbose}"
+			action       ="put"
 		>
 			<fileset dir="mirror"/>
-		</ftp>
+		</ftp2>
 	</target>
 
 	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
