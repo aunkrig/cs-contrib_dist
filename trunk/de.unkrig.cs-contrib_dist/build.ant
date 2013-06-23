@@ -1,5 +1,4 @@
-<project default="default">
-	<target name="default" depends="build,publish,tag"/>
+<project>
 
 	<property file="local_build.properties"/>
 	<property file="build.properties"/>
@@ -116,11 +115,11 @@
 		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn"/></condition>
 		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'."/>
 
-		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
 		<!--
 			Currently it is only possible to copy the WORKING COPY, and not the BASE version - due to a limitation in
 			svnClientAdapter. See http://subclipse.tigris.org/issues/show_bug.cgi?id=1505
 		-->
+		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
 		<de.unkrig.subclipse.svn>
 			<mkdir                                                 url="${d}"/>
 			<copy srcpath="../de.unkrig.cs-contrib_dist"       desturl="${d}"/>
