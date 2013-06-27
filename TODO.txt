@@ -1,0 +1,7 @@
+
+Ideas for new checks / improvements
+===================================
+
+(1) JavadocMethod: Tolerate missing JAVADOC if method is annotated with '@Test'
+
+(2) Blank lines: Check number of blank lines before/between/after members
