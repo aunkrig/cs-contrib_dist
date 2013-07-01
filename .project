@@ -3,6 +3,9 @@
 	<name>de.unkrig.cs-contrib_dist</name>
 	<comment></comment>
 	<projects>
+		<project>de.unkrig.checkstyle-configuration</project>
+		<project>de.unkrig.cs-contrib.branding</project>
+		<project>de.unkrig.cs-contrib.core</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>

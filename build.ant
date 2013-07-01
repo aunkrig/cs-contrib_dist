@@ -126,10 +126,11 @@
 		-->
 		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
 		<de.unkrig.subclipse.svn>
-			<mkdir                                                 url="${d}"/>
-			<copy srcpath="../de.unkrig.cs-contrib_dist"       desturl="${d}"/>
-			<copy srcpath="../de.unkrig.cs-contrib.branding"   desturl="${d}"/>
-			<copy srcpath="../de.unkrig.cs-contrib.core"       desturl="${d}"/>
+			<mkdir                                                    url="${d}"/>
+			<copy srcpath="../de.unkrig.checkstyle-configuration" desturl="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib_dist"          desturl="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib.branding"      desturl="${d}"/>
+			<copy srcpath="../de.unkrig.cs-contrib.core"          desturl="${d}"/>
 		</de.unkrig.subclipse.svn>
 	</target>
 </project>
