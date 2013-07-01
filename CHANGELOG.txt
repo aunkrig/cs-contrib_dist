@@ -2,3 +2,6 @@
 Version 1.0.7:
   - de.unkrig.WhitespaceAround: Property 'ignoreEnhancedForColon' was missing.
   - de.unkrig.WhitespaceAround: Clarified the description.
+
+Versions 1.0.6 and before:
+  No change log available.
