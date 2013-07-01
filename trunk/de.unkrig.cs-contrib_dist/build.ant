@@ -59,9 +59,14 @@
 
 		<!-- Build update site -->
 
-		<copy file="templates/update/site.xml" todir="mirror/update">
+		<copy todir="mirror/update">
 			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+			<fileset dir="templates/update"/>
 		</copy>
+
+		<!-- Add the change log -->
+
+		<copy file="CHANGELOG.txt" todir="mirror"/>
 	</target>
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
