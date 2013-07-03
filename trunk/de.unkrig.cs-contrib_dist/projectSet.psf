@@ -2,6 +2,7 @@
 <psf version="2.0">
 <provider id="org.tigris.subversion.subclipse.core.svnnature">
 <project reference="0.9.3,https://svn.code.sf.net/p/loggifier/code/trunk/de.unkrig.checkstyle-configuration,de.unkrig.checkstyle-configuration"/>
+<project reference="0.9.3,https://svn.code.sf.net/p/loggifier/code/trunk/de.unkrig.commons.nullanalysis,de.unkrig.commons.nullanalysis"/>
 <project reference="0.9.3,https://svn.code.sf.net/p/loggifier/code/trunk/de.unkrig.cs-contrib.branding,de.unkrig.cs-contrib.branding"/>
 <project reference="0.9.3,https://svn.code.sf.net/p/loggifier/code/trunk/de.unkrig.cs-contrib.core,de.unkrig.cs-contrib.core"/>
 </provider>
