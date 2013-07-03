@@ -1,4 +1,8 @@
 
+Version 1.0.8:
+  - NameSpelling: ConfigurationException was thrown when 'requiredModifiers' or 'missingModifiers' were non-empty.
+  - Added the 'de.unkrig.Whitespace' check, which supersedes all other whitespace-related checks.
+
 Version 1.0.7:
   - de.unkrig.WhitespaceAround: Property 'ignoreEnhancedForColon' was missing.
   - de.unkrig.WhitespaceAround: Clarified the description.
