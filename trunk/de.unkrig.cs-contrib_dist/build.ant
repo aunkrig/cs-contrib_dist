@@ -179,6 +179,7 @@
 		<!-- Determine the version from the feature version in the mirrored 'site.xml' file. -->
 
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
+		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version."/>
 		<property name="version" value="${site.xml.site.feature(version)}"/>
 
 		<!-- Compose the tag name from the feature name and the version. -->
