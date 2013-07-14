@@ -13,6 +13,11 @@
 		resource="ant_issue_54883.properties"
 	/>
 
+	<taskdef
+		classpath="lib/ant-contrib-1.0b3.jar"
+		resource="net/sf/antcontrib/antcontrib.properties"
+	/>
+
 	<target name="build" description="Builds plugins, feature and update site in './mirror'">
 		<delete dir="mirror"/>
 
@@ -71,7 +76,42 @@
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
+		<!-- Determine the version and the base version of the previously built update site. -->
+
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
+		<property name="built.version" value="${site.xml.site.feature(version)}"/>
+		<propertyregex
+			input="${built.version}"
+			regexp="(\d+(?:\.\d+)*)\.v........-...."
+			select="\1"
+			property="built.base.version"
+			override="true"
+		/>
+
+		<!-- Verify that the base version matches that defined in 'build.properties. -->
+
+		<condition property="base.version.matches">
+			<equals arg1="${built.base.version}" arg2="${base.version}"/>
+		</condition>
+		<fail
+			unless="base.version.matches"
+			message="It seems you forgot to execute the 'build' target."
+		/>
+
+		<!-- Verify that there is a description for that base version in the change log. -->
+
+		<condition property="contains.version">
+			<isfileselected file="CHANGELOG.txt">
+				<contains text="Version ${base.version}:"/>
+			</isfileselected>
+		</condition>
+		<fail
+			unless="${contains.version}"
+			message="Please add a description for base version '${base.version}' in the change log before publishing."
+		/>
+
 		<!-- Have the FTP parameters entered/confirmed by the user. -->
+
 		<de.unkrig.ant-contrib.swing-dialog title="FTP upload of update site">
 			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
 			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}"/>
@@ -86,6 +126,36 @@
 			<checkbox text="Verbose reporting" property="ftp.verbose" defaultvalue="true"/>
 		</de.unkrig.ant-contrib.swing-dialog>
 
+		<!-- Verify that the base version does not yet exist on the remote update site. -->
+
+		<ftp2
+			server       ="${ftp.server}"
+			port         ="${ftp.port}"
+			userid       ="${ftp.userid}"
+			password     ="${ftp.password}"
+			proxyServer  ="${ftp.proxy.server}"
+			proxyPort    ="${ftp.proxy.port}"
+			proxyUserid  ="${ftp.proxy.userid}"
+			proxyPassword="${ftp.proxy.password}"
+			remotedir    ="${ftp.remotedir}/update/features"
+			passive      ="${ftp.passive}"
+			verbose      ="${ftp.verbose}"
+			action       ="list"
+			listing      ="listing.txt"
+		><fileset includes="de.unkrig.cs-contrib_${base.version}.v????????-????.jar"/></ftp2>
+		<condition property="feature.exists.on.update.site">
+			<isfileselected file="listing.txt">
+				<size value="0" when="more"/>
+			</isfileselected>
+		</condition>
+		<delete file="listing.txt"/>
+		<fail
+			if="${feature.exists.on.update.site}"
+			message="A base version '${base.version}' already exists on the remote update site."
+		/>
+
+		<!-- Upload the update site to the remote host. -->
+<fail/>
 		<ftp2
 			server       ="${ftp.server}"
 			port         ="${ftp.port}"
