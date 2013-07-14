@@ -1,4 +1,8 @@
 
+Version 1.0.9:
+  - Fixed some misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
+  - 'SEMI__ENUM_DECL' didn't work.
+
 Version 1.0.8:
   - NameSpelling: ConfigurationException was thrown when 'requiredModifiers' or 'missingModifiers' were non-empty.
   - Added the 'de.unkrig.Whitespace' check, which supersedes all other whitespace-related checks.

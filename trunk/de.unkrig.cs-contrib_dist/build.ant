@@ -155,7 +155,7 @@
 		/>
 
 		<!-- Upload the update site to the remote host. -->
-<fail/>
+
 		<ftp2
 			server       ="${ftp.server}"
 			port         ="${ftp.port}"
