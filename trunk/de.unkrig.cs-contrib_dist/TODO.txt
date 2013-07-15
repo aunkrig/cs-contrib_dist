@@ -6,7 +6,6 @@ Ideas for new checks / improvements
 
 (2) Blank lines: Check number of blank lines before/between/after members
 
-(3) Redundant field initializer: Identifies fields that are initialized to their default values (0, false, 0L, 0F, 0D,
-    null).
-
-(4) 'new String("xx")'
+(3) Redundant Code:
+    * Superconstructor invocation: Explicit invocation of zero-parameter superconstructor.
+    * Use of one-parameter string constructor: new String("xx")
