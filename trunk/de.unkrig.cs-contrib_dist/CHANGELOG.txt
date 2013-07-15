@@ -2,6 +2,7 @@
 Version 1.0.10:
   - Added more 'JavaElement's.
   - Fixed some more misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
+  - Completed the documentation of the 'de.unkrig.Alignment' check.
 
 Version 1.0.9:
   - Fixed some misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
