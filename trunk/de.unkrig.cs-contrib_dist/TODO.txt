@@ -9,3 +9,4 @@ Ideas for new checks / improvements
 (3) Redundant Code:
     * Superconstructor invocation: Explicit invocation of zero-parameter superconstructor.
     * Use of one-parameter string constructor: new String("xx")
+    * ';' in type declaration
