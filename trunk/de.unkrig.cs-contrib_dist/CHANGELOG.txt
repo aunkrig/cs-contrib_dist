@@ -4,6 +4,13 @@ Version 1.0.10:
   - Fixed some more misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
   - Completed the documentation of the 'de.unkrig.Alignment' check.
   - WrapAndIndent: Checking of 'void.class' and 'MyType[].class' didn't work.
+  - WrapAndIndent: Whether one-liners (ClassDecl, InterfaceDecl, EnumDecl, AnnoDecl, CtorDecl, MethDecl,
+    SwitchBlockStmtGroup) are allowed is now configurable.
+  - WrapAndIndent: Whether declarations must/must not be wrapped (ClassDeclBeforeClass, InterfaceDeclBeforeInterface,
+    EnumDeclBeforeEnum, AnnoDeclBeforeAt, FieldDeclBeforeName, CtorDeclBeforeName, MethDeclBeforeName,
+    LocVarDeclBeforeName) is now configurable.      
+  - WrapAndIndent: Whether one must/must not wrap before lcurly (TypeDecl, CtorDecl, MethodDecl, Do, ArrayInit,
+    AnonClassDecl) is now configurable.
 
 Version 1.0.9:
   - Fixed some misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
