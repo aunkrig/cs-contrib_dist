@@ -1,4 +1,13 @@
 
+Version 1.0.11:
+  - ZeroParameterSuperconstructorInvocation: Do not regard QUALIFIED zero-parameter superconstructor invocations
+    as redundant.
+  - WrapAndIndent: Check wrapping before and after binary operators.
+  - WrapAndIndent: Array index operations were not properly checked.
+  - WrapAndIndent: 'Object[].class' crashed the expression wrapping check.
+  - Whitespace: Fixed up 'SUPER_CTOR_CALL' and 'R_PAREN__PARENTHESIZED'.
+  - WrapAndIndent: 'Join' quickfix: fixed up space insertion.
+
 Version 1.0.10:
   - Added more 'JavaElement's.
   - Fixed some more misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
