@@ -1,5 +1,8 @@
 
-Version 1.0.11:
+Version ?.?.? (2013-??-??):
+  - Bla
+
+Version 1.0.11 (2013-07-19):
   - ZeroParameterSuperconstructorInvocation: Do not regard QUALIFIED zero-parameter superconstructor invocations
     as redundant.
   - WrapAndIndent: Check wrapping before and after binary operators.
@@ -8,7 +11,7 @@ Version 1.0.11:
   - Whitespace: Fixed up 'SUPER_CTOR_CALL' and 'R_PAREN__PARENTHESIZED'.
   - WrapAndIndent: 'Join' quickfix: fixed up space insertion.
 
-Version 1.0.10:
+Version 1.0.10 (2013-07-19):
   - Added more 'JavaElement's.
   - Fixed some more misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
   - Completed the documentation of the 'de.unkrig.Alignment' check.
@@ -21,15 +24,15 @@ Version 1.0.10:
   - WrapAndIndent: Whether one must/must not wrap before lcurly (TypeDecl, CtorDecl, MethodDecl, Do, ArrayInit,
     AnonClassDecl) is now configurable.
 
-Version 1.0.9:
+Version 1.0.9 (2013-07-14):
   - Fixed some misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
   - 'SEMI__ENUM_DECL' didn't work.
 
-Version 1.0.8:
+Version 1.0.8 (2013-07-12):
   - NameSpelling: ConfigurationException was thrown when 'requiredModifiers' or 'missingModifiers' were non-empty.
   - Added the 'de.unkrig.Whitespace' check, which supersedes all other whitespace-related checks.
 
-Version 1.0.7:
+Version 1.0.7 (2013-07-01):
   - de.unkrig.WhitespaceAround: Property 'ignoreEnhancedForColon' was missing.
   - de.unkrig.WhitespaceAround: Clarified the description.
 

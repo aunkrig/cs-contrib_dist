@@ -76,20 +76,20 @@
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
-		<!-- Determine the version and the base version of the previously built update site. -->
+		<!-- Determine the feature version from the previously built update site, e.g. '1.0.11.v20130819-1433'. -->
 
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
-		<property name="built.version" value="${site.xml.site.feature(version)}"/>
+		<property name="built.feature.version" value="${site.xml.site.feature(version)}"/>
+
+		<!-- Verify that the base version (e.g. '1.0.11') matches that defined in 'build.properties'. -->
+
 		<propertyregex
-			input="${built.version}"
+			input="${built.feature.version}"
 			regexp="(\d+(?:\.\d+)*)\.v........-...."
 			select="\1"
 			property="built.base.version"
 			override="true"
 		/>
-
-		<!-- Verify that the base version matches that defined in 'build.properties. -->
-
 		<condition property="base.version.matches">
 			<equals arg1="${built.base.version}" arg2="${base.version}"/>
 		</condition>
@@ -98,16 +98,23 @@
 			message="It seems you forgot to execute the 'build' target."
 		/>
 
-		<!-- Verify that there is a description for that base version in the change log. -->
+		<!-- Verify that there is a description for the new version in the change log. -->
 
-		<condition property="contains.version">
+		<propertyregex
+			input="${built.feature.version}"
+			regexp=".*v(....)(..)(..)-...."
+			select="\1-\2-\3"
+			property="built.date"
+			override="true"
+		/>
+		<condition property="changelog.contains.description">
 			<isfileselected file="CHANGELOG.txt">
-				<contains text="Version ${base.version}:"/>
+				<contains text="Version ${base.version} (${built.date}):"/>
 			</isfileselected>
 		</condition>
 		<fail
-			unless="${contains.version}"
-			message="Please add a description for base version '${base.version}' in the change log before publishing."
+			unless="${changelog.contains.description}"
+			message="Please add a description for '${base.version} (${built.date})' in the change log before publishing."
 		/>
 
 		<!-- Have the FTP parameters entered/confirmed by the user. -->
