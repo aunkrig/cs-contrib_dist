@@ -1,6 +1,6 @@
 
 Version ?.?.? (2013-??-??):
-  - Bla
+  - Removed 'whitespaceBefore / void', because 'void.class' may legally appear with preceding whitespace.
 
 Version 1.0.11 (2013-07-19):
   - ZeroParameterSuperconstructorInvocation: Do not regard QUALIFIED zero-parameter superconstructor invocations
