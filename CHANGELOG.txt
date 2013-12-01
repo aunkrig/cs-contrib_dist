@@ -1,6 +1,9 @@
 
-Version ?.?.? (2013-??-??):
+Version 1.0.12 (2013-12-01):
   - Removed 'whitespaceBefore / void', because 'void.class' may legally appear with preceding whitespace.
+  - WrapAndIndent: Check wrapping before and after binary operators.
+  - WrapAndIndent: Array index operations were not properly checked.
+  - WrapAndIndent: 'Object[].class' crashed the expression wrapping check.
 
 Version 1.0.11 (2013-07-19):
   - ZeroParameterSuperconstructorInvocation: Do not regard QUALIFIED zero-parameter superconstructor invocations
