@@ -1,4 +1,8 @@
 
+Version 1.0.13 (2013-12-02):
+  - 'AbstractDocumentResolution' now parses the message's arguments.
+  - quickfixes/WrapAndIndent3: '{0} must appear in column {1} not {2}' is now corretly fixed.
+
 Version 1.0.12 (2013-12-01):
   - Removed 'whitespaceBefore / void', because 'void.class' may legally appear with preceding whitespace.
   - WrapAndIndent: Check wrapping before and after binary operators.
