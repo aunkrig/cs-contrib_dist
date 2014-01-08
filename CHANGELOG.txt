@@ -1,4 +1,8 @@
 
+Version 1.0.14 (2014-01-08):
+  - AstUtil.toJavaElement(): Angle brackets: Type arguments were falsely identified as method invocation type arguments
+    if the type was QUALIFIED (e.g. "Map.Entry<...>").
+
 Version 1.0.13 (2013-12-02):
   - 'AbstractDocumentResolution' now parses the message's arguments.
   - quickfixes/WrapAndIndent3: '{0} must appear in column {1} not {2}' is now corretly fixed.
