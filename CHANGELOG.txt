@@ -1,4 +1,7 @@
 
+Version ? (?):
+  - Added the 'de.unkrig.CppCommentAlignment' check.
+
 Version 1.0.14 (2014-01-08):
   - AstUtil.toJavaElement(): Angle brackets: Type arguments were falsely identified as method invocation type arguments
     if the type was QUALIFIED (e.g. "Map.Entry<...>").
