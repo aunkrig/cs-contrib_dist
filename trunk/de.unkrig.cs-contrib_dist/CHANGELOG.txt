@@ -1,5 +1,5 @@
 
-Version ? (?):
+Version 1.0.15 (2014-01-09):
   - Added the 'de.unkrig.CppCommentAlignment' check.
 
 Version 1.0.14 (2014-01-08):
