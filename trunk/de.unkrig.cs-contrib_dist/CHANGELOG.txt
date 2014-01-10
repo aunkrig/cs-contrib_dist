@@ -1,4 +1,7 @@
 
+Version ? (?):
+  - WrapAndIndent: Quickfixes now honor the Java formatter's TAB_CHAR setting (space, tab, mixed).
+
 Version 1.0.15 (2014-01-09):
   - Added the 'de.unkrig.CppCommentAlignment' check.
 
