@@ -1,5 +1,5 @@
 
-Version ? (?):
+Version 1.0.19 (2014-11-01):
   - WrapAndIndent: Added the 'wrapPackageDeclBeforePackage' option.
 
 Version 1.0.18 (2014-04-10):
