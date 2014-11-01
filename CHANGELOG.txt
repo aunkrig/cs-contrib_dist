@@ -1,4 +1,7 @@
 
+Version ? (?):
+  - WrapAndIndent: Added the 'wrapPackageDeclBeforePackage' option.
+
 Version 1.0.18 (2014-04-10):
   - Whitespace: 'class X extends Y.Z<N> {' caused "'>' is followed by whitespace (option
     'R_ANGLE__METH_INVOCATION_TYPE_ARGS')".
