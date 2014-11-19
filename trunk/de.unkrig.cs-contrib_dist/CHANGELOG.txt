@@ -1,4 +1,7 @@
 
+Version 1.0.20 (2014-11-19):
+  - Whitespace: Type parameters of constructors were not recognized as 'method/constructor type parameters'.
+
 Version 1.0.19 (2014-11-01):
   - WrapAndIndent: Added the 'wrapPackageDeclBeforePackage' option.
 
