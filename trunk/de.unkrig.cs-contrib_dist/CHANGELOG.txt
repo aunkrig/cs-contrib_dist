@@ -1,4 +1,15 @@
 
+Version 1.0.21 (2014-12-16):
+  - Introduced 'LocalTokenType' for compatibility with ALL CheckStyle versions 5.X and 6.X.
+
+           ^
+           |
+THESE VERSIONS ARE FOR ALL CHECKSTYLE VERSIONS 5.X AND 6.x
+
+THESE VERSIONS ARE FOR CHECKSTYLE VERSIONS 5.8 AND OLDER
+           |
+           v
+
 Version 1.0.20 (2014-11-19):
   - Whitespace: Type parameters of constructors were not recognized as 'method/constructor type parameters'.
 
