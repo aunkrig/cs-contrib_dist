@@ -206,6 +206,7 @@
 		<de.unkrig.subclipse.svn>
 			<mkdir                                                    url="${d}"/>
 			<copy srcpath="../de.unkrig.checkstyle-configuration" desturl="${d}"/>
+			<copy srcpath="../de.unkrig.commons.nullanalysis"     desturl="${d}"/>
 			<copy srcpath="../de.unkrig.cs-contrib_dist"          desturl="${d}"/>
 			<copy srcpath="../de.unkrig.cs-contrib.branding"      desturl="${d}"/>
 			<copy srcpath="../de.unkrig.cs-contrib.core"          desturl="${d}"/>
