@@ -1,10 +1,16 @@
 
+Version 1.1.0 (2014-12-30):
+  - All meta files and online documentation is now generated wit "cs-doclet".
+  - Added german localization.
+
 Version 1.0.21 (2014-12-16):
   - Introduced 'LocalTokenType' for compatibility with ALL CheckStyle versions 5.X and 6.X.
 
            ^
            |
-THESE VERSIONS ARE FOR ALL CHECKSTYLE VERSIONS 5.X AND 6.x
+THESE VERSIONS ARE COMPATIBLE WITH ALL CHECKSTYLE VERSIONS 5.x AND 6.x
+
+-------------------------
 
 THESE VERSIONS ARE FOR CHECKSTYLE VERSIONS 5.8 AND OLDER
            |
