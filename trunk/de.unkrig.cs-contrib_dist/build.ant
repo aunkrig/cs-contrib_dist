@@ -5,7 +5,7 @@
 
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"
-		resource="de/unkrig/antcontrib/ant.properties"
+		resource="de/unkrig/antcontrib/ant.xml"
 	/>
 
 	<taskdef
@@ -119,7 +119,7 @@
 
 		<!-- Have the FTP parameters entered/confirmed by the user. -->
 
-		<de.unkrig.ant-contrib.swing-dialog title="FTP upload of update site">
+		<swingDialog title="FTP upload of update site">
 			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
 			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}"/>
 			<label text="User ID:"                  /><text property="ftp.userid"         defaultvalue="${ftp.userid}"/>
@@ -129,9 +129,9 @@
 			<label text="Proxy user ID (optional):" /><text property="ftp.proxy.userid"   defaultvalue="${ftp.proxy.userid}"/>
 			<label text="Proxy password (optional):"/><text property="ftp.proxy.password" defaultvalue="${ftp.proxy.password}" secure="true"/>
 			<label text="Remote directory:"         /><text property="ftp.remotedir"      defaultvalue="${ftp.remotedir}"/>
-			<checkbox text="Use passive FTP"   property="ftp.passive" defaultvalue="true"/>
-			<checkbox text="Verbose reporting" property="ftp.verbose" defaultvalue="true"/>
-		</de.unkrig.ant-contrib.swing-dialog>
+			<checkbox text="Use passive FTP"   property="ftp.passive" preselected="true"/>
+			<checkbox text="Verbose reporting" property="ftp.verbose" preselected="true"/>
+		</swingDialog>
 
 		<!-- Verify that the base version does not yet exist on the remote update site. -->
 
