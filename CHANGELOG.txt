@@ -1,5 +1,5 @@
 
-Version 1.2.0 (2015-?):
+Version 1.2.0 (2015-07-28):
   - WrapAndIndent: Property 'wrapArrayInitBeforeLCurly' now also applies to ANNOTATION array initializers.
   - WrapAndIndent: Not only array initializers, method calls and enum definitions may have MUTIPLE values in one line,
     but now also ANNOTATION array initializers.
