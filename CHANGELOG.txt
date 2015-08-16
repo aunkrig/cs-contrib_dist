@@ -1,6 +1,8 @@
 
 Version 1.2.2 (2015-08-16):
   - de.unkrig.Whitespace: "(R|L)_ANGLE__TYPE_PARAMS" didn't work (typo).
+  - Moved "de.unkrig.doclet.cs.jar" from the CORE project to the DIST project, so it doesn't get packaged with the
+    plug-in.
 
 Version 1.2.1 (2015-07-29):
   - Re-introduced the "<message-key>"s for the rules.
