@@ -1,4 +1,7 @@
 
+Version ? (????-??-??):
+  - de.unkrig.Whitespace: "(R|L)_ANGLE__TYPE_PARAMS" didn't work (typo).
+
 Version 1.2.1 (2015-07-29):
   - Re-introduced the "<message-key>"s for the rules.
 
