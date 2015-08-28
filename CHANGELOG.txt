@@ -1,4 +1,7 @@
 
+Version 1.2.3 (2015-08-28):
+  - Switched from generated MEDIAWIKI documentation to generated HTML documentation.
+
 Version 1.2.2 (2015-08-16):
   - de.unkrig.Whitespace: "(R|L)_ANGLE__TYPE_PARAMS" didn't work (typo).
   - Moved "de.unkrig.doclet.cs.jar" from the CORE project to the DIST project, so it doesn't get packaged with the
