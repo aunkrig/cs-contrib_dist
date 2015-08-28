@@ -74,7 +74,6 @@
 
 			<!-- Iff rules use 'option providers': -->
 			<fileset dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
-			<dirset  dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.core_*" />
 
 			<!-- Iff there are quickfixes: -->
 			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
