@@ -9,11 +9,6 @@
 	/>
 
 	<taskdef
-		classpath="lib/ant_issue_54883.jar"
-		resource="ant_issue_54883.properties"
-	/>
-
-	<taskdef
 		classpath="lib/ant-contrib-1.0b3.jar"
 		resource="net/sf/antcontrib/antcontrib.properties"
 	/>
@@ -67,10 +62,22 @@
 
 		<echo message="*** Generate CSDOC documentation" />
 		<mkdir dir="mirror/csdoc" />
-		<path id="doclet.path">
+		<eclipse.convertPath resourcePath="no-template-core" property="no-template-core" />
+		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
 			<fileset file="lib/de.unkrig.doclet.cs.jar" />
+			<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
+<!--
+			<pathelement location="../de.unkrig.doclet.cs/bin"            />
+			<pathelement location="../de.unkrig.doclet.cs.annotation/bin" />
+			<pathelement location="../de.unkrig.commons.doclet/bin" />
+			<pathelement location="../de.unkrig.commons.io/bin"     />
+			<pathelement location="../de.unkrig.commons.lang/bin"   />
+			<pathelement location="../de.unkrig.commons.util/bin"   />
+			<pathelement location="../de.unkrig.commons.text/bin"   />
+			<pathelement location="${no-template-core}/bin" />
+-->
 
 			<!-- Iff rules use 'option providers': -->
 			<fileset dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
@@ -88,7 +95,7 @@
 		</path>
 		
 		<javadoc
-			docletpathref="doclet.path"
+			docletpathref="cs.doclet.path"
 			doclet="de.unkrig.doclet.cs.CsDoclet"
 			windowtitle="de.unkrig.cs-doclet"
 			doctitle="de.unkrig.cs-doclet"
