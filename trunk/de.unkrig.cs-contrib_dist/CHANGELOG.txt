@@ -1,0 +1,116 @@
+
+Version 1.2.5 (2015-09-30):
+  - "InnerAssignment" produced a false positive on TRY-with-resources.
+  - Beautified the CSDOC comments for the generated edocumentation.
+
+Version 1.2.4 (2015-08-31):
+  - Made the code more robust against unexpected tokens.
+
+Version 1.2.3 (2015-08-28):
+  - Switched from generated MEDIAWIKI documentation to generated HTML documentation.
+
+Version 1.2.2 (2015-08-16):
+  - de.unkrig.Whitespace: "(R|L)_ANGLE__TYPE_PARAMS" didn't work (typo).
+  - Moved "de.unkrig.doclet.cs.jar" from the CORE project to the DIST project, so it doesn't get packaged with the
+    plug-in.
+
+Version 1.2.1 (2015-07-29):
+  - Re-introduced the "<message-key>"s for the rules.
+
+Version 1.2.0 (2015-07-28):
+  - WrapAndIndent: Property 'wrapArrayInitBeforeLCurly' now also applies to ANNOTATION array initializers.
+  - WrapAndIndent: Not only array initializers, method calls and enum definitions may have MUTIPLE values in one line,
+    but now also ANNOTATION array initializers.
+  - German localization of quickfix labels and descriptions was missing.
+  - Check documentation (generated automatically by cs-doclet and translated manually into german) now includes the
+    relevant quickfixes.
+  - Replaced "WrapAndIndent" with 15 new checks named "Wrap...Check", because "WrapAndIndent" had way too many
+    parameters.
+
+Version 1.1.0 (2014-12-30):
+  - All meta files and online documentation is now generated wit "cs-doclet".
+  - Added german localization.
+
+Version 1.0.21 (2014-12-16):
+  - Introduced 'LocalTokenType' for compatibility with ALL CheckStyle versions 5.X and 6.X.
+
+           ^
+           |
+THESE VERSIONS ARE COMPATIBLE WITH ALL CHECKSTYLE VERSIONS 5.x AND 6.x
+
+-------------------------
+
+THESE VERSIONS ARE FOR CHECKSTYLE VERSIONS 5.8 AND OLDER
+           |
+           v
+
+Version 1.0.20 (2014-11-19):
+  - Whitespace: Type parameters of constructors were not recognized as 'method/constructor type parameters'.
+
+Version 1.0.19 (2014-11-01):
+  - WrapAndIndent: Added the 'wrapPackageDeclBeforePackage' option.
+
+Version 1.0.18 (2014-04-10):
+  - Whitespace: 'class X extends Y.Z<N> {' caused "'>' is followed by whitespace (option
+    'R_ANGLE__METH_INVOCATION_TYPE_ARGS')".
+
+Version 1.0.17 (2014-03-26):
+  - WrapAndIndent: Added properties 'wrapTryBeforeCatch' and 'wrapTryBeforeFinally'
+
+Version 1.0.16 (2014-01-17):
+  - WrapAndIndent: Quickfixes now honor the Java formatter's TAB_CHAR setting (space, tab, mixed).
+  - CppCommentAlignment: Complete rewrite; operates AST-based now.
+
+Version 1.0.15 (2014-01-09):
+  - Added the 'de.unkrig.CppCommentAlignment' check.
+
+Version 1.0.14 (2014-01-08):
+  - AstUtil.toJavaElement(): Angle brackets: Type arguments were falsely identified as method invocation type arguments
+    if the type was QUALIFIED (e.g. "Map.Entry<...>").
+
+Version 1.0.13 (2013-12-02):
+  - 'AbstractDocumentResolution' now parses the message's arguments.
+  - quickfixes/WrapAndIndent3: '{0} must appear in column {1} not {2}' is now corretly fixed.
+
+Version 1.0.12 (2013-12-01):
+  - Removed 'whitespaceBefore / void', because 'void.class' may legally appear with preceding whitespace.
+  - WrapAndIndent: Check wrapping before and after binary operators.
+  - WrapAndIndent: Array index operations were not properly checked.
+  - WrapAndIndent: 'Object[].class' crashed the expression wrapping check.
+
+Version 1.0.11 (2013-07-19):
+  - ZeroParameterSuperconstructorInvocation: Do not regard QUALIFIED zero-parameter superconstructor invocations
+    as redundant.
+  - WrapAndIndent: Check wrapping before and after binary operators.
+  - WrapAndIndent: Array index operations were not properly checked.
+  - WrapAndIndent: 'Object[].class' crashed the expression wrapping check.
+  - Whitespace: Fixed up 'SUPER_CTOR_CALL' and 'R_PAREN__PARENTHESIZED'.
+  - WrapAndIndent: 'Join' quickfix: fixed up space insertion.
+
+Version 1.0.10 (2013-07-19):
+  - Added more 'JavaElement's.
+  - Fixed some more misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
+  - Completed the documentation of the 'de.unkrig.Alignment' check.
+  - WrapAndIndent: Checking of 'void.class' and 'MyType[].class' didn't work.
+  - WrapAndIndent: Whether one-liners (ClassDecl, InterfaceDecl, EnumDecl, AnnoDecl, CtorDecl, MethDecl,
+    SwitchBlockStmtGroup) are allowed is now configurable.
+  - WrapAndIndent: Whether declarations must/must not be wrapped (ClassDeclBeforeClass, InterfaceDeclBeforeInterface,
+    EnumDeclBeforeEnum, AnnoDeclBeforeAt, FieldDeclBeforeName, CtorDeclBeforeName, MethDeclBeforeName,
+    LocVarDeclBeforeName) is now configurable.      
+  - WrapAndIndent: Whether one must/must not wrap before lcurly (TypeDecl, CtorDecl, MethodDecl, Do, ArrayInit,
+    AnonClassDecl) is now configurable.
+
+Version 1.0.9 (2013-07-14):
+  - Fixed some misspelled 'JavaElement' constants ('..._DEF' => '..._DECL').
+  - 'SEMI__ENUM_DECL' didn't work.
+
+Version 1.0.8 (2013-07-12):
+  - NameSpelling: ConfigurationException was thrown when 'requiredModifiers' or 'missingModifiers' were non-empty.
+  - Added the 'de.unkrig.Whitespace' check, which supersedes all other whitespace-related checks.
+
+Version 1.0.7 (2013-07-01):
+  - de.unkrig.WhitespaceAround: Property 'ignoreEnhancedForColon' was missing.
+  - de.unkrig.WhitespaceAround: Clarified the description.
+
+Versions 1.0.6 and before:
+  No change log available.

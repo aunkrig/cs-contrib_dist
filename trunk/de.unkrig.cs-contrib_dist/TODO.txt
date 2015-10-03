@@ -1,0 +1,25 @@
+
+Ideas for new checks / improvements
+===================================
+
+(1) JavadocMethod: Tolerate missing JAVADOC if method is annotated with '@Test'
+
+(2) Blank lines: Check number of blank lines before/between/after members
+
+(3) Redundant Code:
+    * Superconstructor invocation: Explicit invocation of zero-parameter superconstructor.
+    * Use of one-parameter string constructor: new String("xx")
+    * ';' in type declaration
+
+(4) C++ comment alignment:
+    C++ comments in (not necessary strictly consecutive) lines must be vertically aligned if the lines have identical
+    indentation:
+           meth(
+               a,      // comment 1
+               b,      // comment 2
+               c + (   // comment 3
+                   d
+                   + e
+               ),
+               f       // comment 4
+           );

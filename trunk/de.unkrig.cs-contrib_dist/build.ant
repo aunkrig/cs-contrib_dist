@@ -1,0 +1,284 @@
+<project>
+
+	<property file="local_build.properties"/>
+	<property file="build.properties"/>
+
+	<taskdef
+		classpath="lib/de.unkrig.ant-contrib.jar"
+		resource="de/unkrig/antcontrib/ant.xml"
+	/>
+
+	<taskdef
+		classpath="lib/ant-contrib-1.0b3.jar"
+		resource="net/sf/antcontrib/antcontrib.properties"
+	/>
+
+	<target name="build" description="Builds plugins, feature and update site in './mirror'">
+		<delete dir="mirror"/>
+
+		<!-- Set the version name -->
+
+		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
+		<property name="version" value="${base.version}.${qualifier}"/>
+
+		<echo message="*** Build plugin 'de.unkrig.cs-contrib.branding'" />
+		<delete dir="tmp"/>
+		<copy file="../de.unkrig.cs-contrib.branding/META-INF/MANIFEST.MF" todir="tmp/META-INF">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.branding_${version}.jar">
+			<fileset dir="../de.unkrig.cs-contrib.branding" includes="plugin.xml,about.*,*.gif"/>
+			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<echo message="*** Build plugin 'de.unkrig.cs-contrib.core'" />
+		<delete dir="tmp"/>
+		<copy file="../de.unkrig.cs-contrib.core/META-INF/MANIFEST.MF" todir="tmp/META-INF">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.core_${version}.jar">
+			<fileset dir="../de.unkrig.cs-contrib.core" includes="plugin.xml,about.html,icons/**,lib/**"/>
+			<fileset dir="../de.unkrig.cs-contrib.core/bin"/>
+			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<echo message="*** Build feature 'de.unkrig.cs-contrib'" />
+		<delete dir="tmp"/>
+		<copy file="templates/features/de.unkrig.cs-contrib/feature.xml" todir="tmp">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+		</copy>
+		<zip destfile="mirror/update/features/de.unkrig.cs-contrib_${version}.jar">
+			<fileset dir="tmp" includes="feature.xml"/>
+		</zip>
+		<delete dir="tmp"/>
+
+		<echo message="*** Build update site" />
+		<copy todir="mirror/update">
+			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
+			<fileset dir="templates/update"/>
+		</copy>
+
+		<echo message="*** Generate CSDOC documentation" />
+		<mkdir dir="mirror/csdoc" />
+		<eclipse.convertPath resourcePath="no-template-core" property="no-template-core" />
+		<path id="cs.doclet.path">
+
+			<!-- CS doclet: -->
+			<fileset file="lib/de.unkrig.doclet.cs.jar" />
+			<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
+<!--
+			<pathelement location="../de.unkrig.doclet.cs/bin"            />
+			<pathelement location="../de.unkrig.doclet.cs.annotation/bin" />
+			<pathelement location="../de.unkrig.commons.doclet/bin" />
+			<pathelement location="../de.unkrig.commons.io/bin"     />
+			<pathelement location="../de.unkrig.commons.lang/bin"   />
+			<pathelement location="../de.unkrig.commons.util/bin"   />
+			<pathelement location="../de.unkrig.commons.text/bin"   />
+			<pathelement location="${no-template-core}/bin" />
+-->
+
+			<!-- Iff rules use 'option providers': -->
+			<fileset dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
+
+			<!-- Iff there are quickfixes: -->
+			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
+			<dirset  dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.ui_*"            />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.equinox.common_*.jar" />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.jface.text_*.jar"     />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.jdt.core_*.jar"       />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.osgi_*.jar"           />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.text_*.jar"           />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.ui.editors_*.jar"     />
+			<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.ui.ide_*.jar"         />
+		</path>
+		
+		<javadoc
+			docletpathref="cs.doclet.path"
+			doclet="de.unkrig.doclet.cs.CsDoclet"
+			windowtitle="de.unkrig.cs-doclet"
+			doctitle="de.unkrig.cs-doclet"
+			overview="../de.unkrig.cs-contrib.core/src/overview.html"
+			destdir="mirror/csdoc"
+		>
+
+			<!-- The 'CheckStyle packages' which contain the rules (checks, filters) to process: -->
+			<package name="de.unkrig.cscontrib.checks"        />
+			<package name="de.unkrig.cscontrib.filters"       />
+			<package name="de.unkrig.cscontrib.ui.quickfixes" />
+
+			<sourcepath path="../de.unkrig.cs-contrib.core/src" />
+
+			<classpath>
+
+				<!-- Classes required by the rules: -->
+				<dirset  dir="../de.unkrig.commons.nullanalysis" includes="bin" />
+
+				<!-- Iff rules use 'option providers': -->
+				<fileset dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
+				<dirset  dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.core_*" />
+
+				<!-- Iff there are quickfixes: -->
+				<dirset  dir="${eclipse.home}/plugins" includes="net.sf.eclipsecs.ui_*"                    />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.core.filebuffers_*.jar"       />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.core.resources_*.jar"         />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.core.runtime_*.jar"           />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.equinox.common_*.jar"         />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.jface_*.jar"                  />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.text_*.jar"                   />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.swt.win32.win32.x86_64_*.jar" />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.ui.editors_*.jar"             />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.ui.ide_*.jar"                 />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.jdt.core_*.jar"               />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.osgi_*.jar"                   />
+				<fileset dir="${eclipse.home}/plugins" includes="org.eclipse.ui.workbench_*.jar"           />
+
+				<!-- The annotations for the CS doclet. -->
+				<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
+			</classpath>
+		</javadoc>
+
+		<echo message="*** Add the change log" />
+		<copy file="CHANGELOG.txt" todir="mirror"/>
+	</target>
+
+	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
+
+		<!-- Determine the feature version from the previously built update site, e.g. '1.0.11.v20130819-1433'. -->
+
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
+		<property name="built.feature.version" value="${site.xml.site.feature(version)}"/>
+
+		<!-- Verify that the base version (e.g. '1.0.11') matches that defined in 'build.properties'. -->
+
+		<propertyregex
+			input="${built.feature.version}"
+			regexp="(\d+(?:\.\d+)*)\.v........-...."
+			select="\1"
+			property="built.base.version"
+			override="true"
+		/>
+		<condition property="base.version.matches">
+			<equals arg1="${built.base.version}" arg2="${base.version}"/>
+		</condition>
+		<fail
+			unless="base.version.matches"
+			message="It seems you forgot to execute the 'build' target."
+		/>
+
+		<!-- Verify that there is a description for the new version in the change log. -->
+
+		<propertyregex
+			input="${built.feature.version}"
+			regexp=".*v(....)(..)(..)-...."
+			select="\1-\2-\3"
+			property="built.date"
+			override="true"
+		/>
+		<condition property="changelog.contains.description">
+			<isfileselected file="CHANGELOG.txt">
+				<contains text="Version ${base.version} (${built.date}):"/>
+			</isfileselected>
+		</condition>
+		<fail
+			unless="${changelog.contains.description}"
+			message="Please add a description for '${base.version} (${built.date})' in the change log before publishing."
+		/>
+
+		<!-- Have the FTP parameters entered/confirmed by the user. -->
+
+		<swingDialog title="FTP upload of update site">
+			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
+			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}"/>
+			<label text="User ID:"                  /><text property="ftp.userid"         defaultvalue="${ftp.userid}"/>
+			<label text="Password:"                 /><text property="ftp.password"       defaultvalue="${ftp.password}" secure="true"/>
+			<label text="Proxy server (optional):"  /><text property="ftp.proxy.server"   defaultvalue="${ftp.proxy.server}"/>
+			<label text="Proxy port (optional):"    /><text property="ftp.proxy.port"     defaultvalue="${ftp.proxy.port}"/>
+			<label text="Proxy user ID (optional):" /><text property="ftp.proxy.userid"   defaultvalue="${ftp.proxy.userid}"/>
+			<label text="Proxy password (optional):"/><text property="ftp.proxy.password" defaultvalue="${ftp.proxy.password}" secure="true"/>
+			<label text="Remote directory:"         /><text property="ftp.remotedir"      defaultvalue="${ftp.remotedir}"/>
+			<checkbox text="Use passive FTP"   property="ftp.passive" preselected="true"/>
+			<checkbox text="Verbose reporting" property="ftp.verbose" preselected="true"/>
+		</swingDialog>
+
+		<!-- Verify that the base version does not yet exist on the remote update site. -->
+
+		<ftp2
+			server       ="${ftp.server}"
+			port         ="${ftp.port}"
+			userid       ="${ftp.userid}"
+			password     ="${ftp.password}"
+			proxyServer  ="${ftp.proxy.server}"
+			proxyPort    ="${ftp.proxy.port}"
+			proxyUserid  ="${ftp.proxy.userid}"
+			proxyPassword="${ftp.proxy.password}"
+			remotedir    ="${ftp.remotedir}/update/features"
+			passive      ="${ftp.passive}"
+			verbose      ="${ftp.verbose}"
+			action       ="list"
+			listing      ="listing.txt"
+		><fileset includes="de.unkrig.cs-contrib_${base.version}.v????????-????.jar"/></ftp2>
+		<condition property="feature.exists.on.update.site">
+			<isfileselected file="listing.txt">
+				<size value="0" when="more"/>
+			</isfileselected>
+		</condition>
+		<delete file="listing.txt"/>
+		<fail
+			if="${feature.exists.on.update.site}"
+			message="A base version '${base.version}' already exists on the remote update site."
+		/>
+
+		<!-- Upload the update site to the remote host. -->
+
+		<ftp2
+			server       ="${ftp.server}"
+			port         ="${ftp.port}"
+			userid       ="${ftp.userid}"
+			password     ="${ftp.password}"
+			proxyServer  ="${ftp.proxy.server}"
+			proxyPort    ="${ftp.proxy.port}"
+			proxyUserid  ="${ftp.proxy.userid}"
+			proxyPassword="${ftp.proxy.password}"
+			remotedir    ="${ftp.remotedir}"
+			passive      ="${ftp.passive}"
+			verbose      ="${ftp.verbose}"
+			action       ="put"
+		>
+			<fileset dir="mirror"/>
+		</ftp2>
+	</target>
+
+	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
+
+		<!-- Determine the version from the feature version in the mirrored 'site.xml' file. -->
+
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
+		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version."/>
+		<property name="version" value="${site.xml.site.feature(version)}"/>
+
+		<!-- Compose the tag name from the feature name and the version. -->
+
+		<property name="tag" value="cs-contrib_${version}"/>
+		<echo message="Tagging relevant projects as '${tag}'..."/>
+
+		<fail unless="eclipse.running" message="Please select the ECLIPSE external tool configuration option 'Run in the same JRE as the workspace'."/>
+		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn"/></condition>
+		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'."/>
+
+		<!--
+			Currently it is only possible to copy the WORKING COPY, and not the BASE version - due to a limitation in
+			svnClientAdapter. See http://subclipse.tigris.org/issues/show_bug.cgi?id=1505
+		-->
+		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
+		<de.unkrig.subclipse.svn>
+			<mkdir                                              url="${d}"/>
+			<copy dir="../de.unkrig.checkstyle-configuration" toUrl="${d}"/>
+			<copy dir="../de.unkrig.commons.nullanalysis"     toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
+		</de.unkrig.subclipse.svn>
+	</target>
+</project>
