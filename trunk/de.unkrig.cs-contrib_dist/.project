@@ -6,6 +6,8 @@
 		<project>de.unkrig.checkstyle-configuration</project>
 		<project>de.unkrig.cs-contrib.branding</project>
 		<project>de.unkrig.cs-contrib.core</project>
+		<project>de.unkrig.cs-contrib.feature</project>
+		<project>de.unkrig.cs-contrib.updatesite</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>
