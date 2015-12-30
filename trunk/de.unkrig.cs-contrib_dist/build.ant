@@ -252,6 +252,6 @@
 			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}"/>
 		</de.unkrig.subclipse.svn>
 
-		<echo message="*** Congratulations! cs-contrib was successfully built, published and tagged." />
+		<echo message="*** Congratulations! You just built, published and tagged cs-contrib successfully." />
 	</target>
 </project>
