@@ -2,6 +2,7 @@
 Version 1.2.6 (2015-12-30):
   - Support for lambda parameters.
   - Support for TRY-with-resources.
+  - Full P2 compliance (update site now serves 'artifacts.jar' and 'content.jar').
 
 Version 1.2.5 (2015-09-30):
   - "InnerAssignment" produced a false positive on TRY-with-resources.
