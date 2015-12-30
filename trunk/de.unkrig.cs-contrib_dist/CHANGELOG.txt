@@ -1,4 +1,8 @@
 
+Version 1.2.6 (2015-12-30):
+  - Support for lambda parameters.
+  - Support for TRY-with-resources.
+
 Version 1.2.5 (2015-09-30):
   - "InnerAssignment" produced a false positive on TRY-with-resources.
   - Beautified the CSDOC comments for the generated edocumentation.
