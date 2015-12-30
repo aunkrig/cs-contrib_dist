@@ -13,56 +13,30 @@
 		resource="net/sf/antcontrib/antcontrib.properties"
 	/>
 
-	<target name="build" description="Builds plugins, feature and update site in './mirror'">
-		<delete dir="mirror"/>
+	<target name="build" description="Builds the update site project">
 
-		<!-- Set the version name -->
+		<swingDialog>
+			<label text="Before you run this target, be sure that you have executed the following steps:" />
+			<label text=" * Execute the 'de.unkrig.cs-contrib.core generate' target." />
+			<label text=" * Remove all of '../de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
+			<label text=" * Open '/de.unkrig.cs-contrib.updatesite/site.xml', select the 'Site Map' tab, and hit 'Build All'." />
+			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
+		</swingDialog>
 
-		<tstamp><format property="qualifier" pattern="'v'yyyyMMdd-HHmm"/></tstamp>
-		<property name="version" value="${base.version}.${qualifier}"/>
+		<echo message="*** Generating the mirror site..." />
+		<delete dir="mirror" />
+		<mkdir dir="mirror" />
 
-		<echo message="*** Build plugin 'de.unkrig.cs-contrib.branding'" />
-		<delete dir="tmp"/>
-		<copy file="../de.unkrig.cs-contrib.branding/META-INF/MANIFEST.MF" todir="tmp/META-INF">
-			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
-		</copy>
-		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.branding_${version}.jar">
-			<fileset dir="../de.unkrig.cs-contrib.branding" includes="plugin.xml,about.*,*.gif"/>
-			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
-		</zip>
-		<delete dir="tmp"/>
-
-		<echo message="*** Build plugin 'de.unkrig.cs-contrib.core'" />
-		<delete dir="tmp"/>
-		<copy file="../de.unkrig.cs-contrib.core/META-INF/MANIFEST.MF" todir="tmp/META-INF">
-			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
-		</copy>
-		<zip destfile="mirror/update/plugins/de.unkrig.cs-contrib.core_${version}.jar">
-			<fileset dir="../de.unkrig.cs-contrib.core" includes="plugin.xml,about.html,icons/**,lib/**"/>
-			<fileset dir="../de.unkrig.cs-contrib.core/bin"/>
-			<fileset dir="tmp" includes="META-INF/MANIFEST.MF"/>
-		</zip>
-		<delete dir="tmp"/>
-
-		<echo message="*** Build feature 'de.unkrig.cs-contrib'" />
-		<delete dir="tmp"/>
-		<copy file="templates/features/de.unkrig.cs-contrib/feature.xml" todir="tmp">
-			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
-		</copy>
-		<zip destfile="mirror/update/features/de.unkrig.cs-contrib_${version}.jar">
-			<fileset dir="tmp" includes="feature.xml"/>
-		</zip>
-		<delete dir="tmp"/>
-
-		<echo message="*** Build update site" />
+		<mkdir dir="mirror/update" />
 		<copy todir="mirror/update">
-			<filterchain><replacestring from="0.0.0" to="${version}"/></filterchain>
-			<fileset dir="templates/update"/>
+			<fileset dir="../de.unkrig.cs-contrib.updatesite" excludes=".*,logs.zip" />
 		</copy>
 
-		<echo message="*** Generate CSDOC documentation" />
+		<echo message="*** Generating the CSDOC documentation..." />
 		<mkdir dir="mirror/csdoc" />
+<!--
 		<eclipse.convertPath resourcePath="no-template-core" property="no-template-core" />
+-->
 		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
@@ -139,22 +113,22 @@
 			</classpath>
 		</javadoc>
 
-		<echo message="*** Add the change log" />
+		<echo message="*** Adding the change log..." />
 		<copy file="CHANGELOG.txt" todir="mirror"/>
+
+		<echo message="*** If everything built fine, execute the 'publish' target, and then the 'tag' target." />
 	</target>
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
-		<!-- Determine the feature version from the previously built update site, e.g. '1.0.11.v20130819-1433'. -->
-
+		<echo message="*** Determining the feature version from the previously built update site..." />
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
 		<property name="built.feature.version" value="${site.xml.site.feature(version)}"/>
 
-		<!-- Verify that the base version (e.g. '1.0.11') matches that defined in 'build.properties'. -->
-
+		<echo message="*** Verifying that the base version matches that defined in 'build.properties'..." />
 		<propertyregex
 			input="${built.feature.version}"
-			regexp="(\d+(?:\.\d+)*)\.v........-...."
+			regexp="(\d+(?:\.\d+)*)\.[^.]+"
 			select="\1"
 			property="built.base.version"
 			override="true"
@@ -164,14 +138,13 @@
 		</condition>
 		<fail
 			unless="base.version.matches"
-			message="It seems you forgot to execute the 'build' target."
+			message="Feature base version (${built.base.version}) and base version in 'build.properties' (${base.version}) don't match."
 		/>
 
-		<!-- Verify that there is a description for the new version in the change log. -->
-
+		<echo message="*** Verifying that there is a description for the new version in the change log..." />
 		<propertyregex
 			input="${built.feature.version}"
-			regexp=".*v(....)(..)(..)-...."
+			regexp=".*\.(....)(..)(..)...."
 			select="\1-\2-\3"
 			property="built.date"
 			override="true"
@@ -185,8 +158,6 @@
 			unless="${changelog.contains.description}"
 			message="Please add a description for '${base.version} (${built.date})' in the change log before publishing."
 		/>
-
-		<!-- Have the FTP parameters entered/confirmed by the user. -->
 
 		<swingDialog title="FTP upload of update site">
 			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
@@ -202,8 +173,7 @@
 			<checkbox text="Verbose reporting" property="ftp.verbose" preselected="true"/>
 		</swingDialog>
 
-		<!-- Verify that the base version does not yet exist on the remote update site. -->
-
+		<echo message="*** Verifying that the base version does not yet exist on the remote update site..." />
 		<ftp2
 			server       ="${ftp.server}"
 			port         ="${ftp.port}"
@@ -218,7 +188,7 @@
 			verbose      ="${ftp.verbose}"
 			action       ="list"
 			listing      ="listing.txt"
-		><fileset includes="de.unkrig.cs-contrib_${base.version}.v????????-????.jar"/></ftp2>
+		><fileset includes="de.unkrig.cs-contrib_${base.version}.*.jar"/></ftp2>
 		<condition property="feature.exists.on.update.site">
 			<isfileselected file="listing.txt">
 				<size value="0" when="more"/>
@@ -230,8 +200,7 @@
 			message="A base version '${base.version}' already exists on the remote update site."
 		/>
 
-		<!-- Upload the update site to the remote host. -->
-
+		<echo message="*** Uploading the mirror site to the remote host..." />
 		<ftp2
 			server       ="${ftp.server}"
 			port         ="${ftp.port}"
@@ -248,18 +217,18 @@
 		>
 			<fileset dir="mirror"/>
 		</ftp2>
+
+		<echo message="*** If everything went fine, execute the 'tag' target." />
 	</target>
 
 	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
 
-		<!-- Determine the version from the feature version in the mirrored 'site.xml' file. -->
-
+		<echo message="*** Determining the version from the feature version in the mirrored 'site.xml' file..." />
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
 		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version."/>
 		<property name="version" value="${site.xml.site.feature(version)}"/>
 
-		<!-- Compose the tag name from the feature name and the version. -->
-
+		<echo message="*** Composing the tag name from the feature name and the version..." />
 		<property name="tag" value="cs-contrib_${version}"/>
 		<echo message="Tagging relevant projects as '${tag}'..."/>
 
@@ -279,6 +248,10 @@
 			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}"/>
 		</de.unkrig.subclipse.svn>
+
+		<echo message="*** Congratulations! cs-contrib was successfully built, published and tagged." />
 	</target>
 </project>
