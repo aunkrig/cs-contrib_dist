@@ -18,10 +18,35 @@
 		<swingDialog>
 			<label text="Before you run this target, be sure that you have executed the following steps:" />
 			<label text=" * Execute the 'de.unkrig.cs-contrib.core generate' target." />
-			<label text=" * Remove all of '../de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
-			<label text=" * Open '/de.unkrig.cs-contrib.updatesite/site.xml', select the 'Site Map' tab, and hit 'Build All'." />
+			<label text=" * Open '/de.unkrig.cs-contrib.feature/feature.xml'." />
+			<label text="    * Select the 'Overview' tab." />
+			<label text="       * Enter a version like '1.2.7.qualifier'." />
+			<label text="    * Select the 'Plug-ins' tab." />
+			<label text="       * Hit 'Versions...', then 'Force feature version into plug-in ... manifests'." />
+			<label text="    * Save." />
+			<label text=" * Open '/de.unkrig.cs-contrib.updatesite/site.xml'." />
+			<label text="    * Select the 'Site Map' tab." />
+			<label text="       * Remove the previous version of the feature with the DELETE key." />
+			<label text="       * Select category 'de.unkrig.cs-contrib'." />
+			<label text="       * Hit 'Add Feature...', the select the previously defined feature version." />
+			<label text="       * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
+			<label text="       * Hit 'Build All'." />
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
+
+		<!--
+			Workaround for a TERRIBLE bug in PDE 3.10.1.v20150204-1700: That PDE forgets to include the class files
+			of anonymous classes ("*$\d+.class") in the plug-in-jar file! So we update the JAR file of the CORE plug-in
+			here.
+		-->
+		<forEach2 param="core.plugin.jar">
+			<fileset dir="../de.unkrig.cs-contrib.updatesite/plugins" includes="de.unkrig.cs-contrib.core_*.jar" />
+			<sequential>
+				<zip update="true" destfile="../de.unkrig.cs-contrib.updatesite/plugins/@{core.plugin.jar}">
+					<fileset dir="../de.unkrig.cs-contrib.core/bin" includes="**/*$?.class" />
+				</zip>
+			</sequential>
+		</forEach2>
 
 		<echo message="*** Generating the mirror site..." />
 		<delete dir="mirror" />
