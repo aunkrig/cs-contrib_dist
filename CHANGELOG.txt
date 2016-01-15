@@ -1,4 +1,8 @@
 
+Version 1.2.7 (2016-01-15):
+  - Version 1.2.6 was broken because the class files for anonymous classes were missing from the plug-ins' JAR files
+    (PDE bug).
+
 Version 1.2.6 (2015-12-30):
   - Support for lambda parameters.
   - Support for TRY-with-resources.
