@@ -275,6 +275,7 @@
 			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}"/>
+			<copy dir="../de.unkrig.commons.nullanalysis"     toUrl="${d}"/>
 		</de.unkrig.subclipse.svn>
 
 		<echo message="*** Congratulations! You just built, published and tagged cs-contrib successfully." />
