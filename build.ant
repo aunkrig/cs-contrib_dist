@@ -28,9 +28,10 @@
 			<label text="    * Select the 'Site Map' tab." />
 			<label text="       * Remove the previous version of the feature with the DELETE key." />
 			<label text="       * Select category 'de.unkrig.cs-contrib'." />
-			<label text="       * Hit 'Add Feature...', the select the previously defined feature version." />
-			<label text="       * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
-			<label text="       * Hit 'Build All'." />
+			<label text="       * Hit 'Add Feature...', then select the previously defined feature version." />
+			<label text="    * Save." />
+			<label text="    * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
+			<label text="    * Hit 'Build All'." />
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
 
