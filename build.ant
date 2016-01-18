@@ -35,20 +35,6 @@
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
 
-		<!--
-			Workaround for a TERRIBLE bug in PDE 3.10.1.v20150204-1700: That PDE forgets to include the class files
-			of anonymous classes ("*$\d+.class") in the plug-in-jar file! So we update the JAR file of the CORE plug-in
-			here.
-		-->
-		<forEach2 param="core.plugin.jar">
-			<fileset dir="../de.unkrig.cs-contrib.updatesite/plugins" includes="de.unkrig.cs-contrib.core_*.jar" />
-			<sequential>
-				<zip update="true" destfile="../de.unkrig.cs-contrib.updatesite/plugins/@{core.plugin.jar}">
-					<fileset dir="../de.unkrig.cs-contrib.core/bin" includes="**/*$?.class" />
-				</zip>
-			</sequential>
-		</forEach2>
-
 		<echo message="*** Generating the mirror site..." />
 		<delete dir="mirror" />
 		<mkdir dir="mirror" />

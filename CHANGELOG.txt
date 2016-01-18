@@ -1,4 +1,8 @@
 
+Version ? (?):
+  - The fix in version 1.2.7 is now obsolete, because the missing anonymous class .class file were only SEEMINGLY the
+    reason for the problem.
+
 Version 1.2.8 (2016-01-18):
   - PDE uses a different classpath than ECLIPSE - hence garnishes the class files with "Unresolved compilation
     problem"s.
