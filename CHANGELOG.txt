@@ -1,4 +1,8 @@
 
+Version 1.2.8 (2016-01-18):
+  - PDE uses a different classpath than ECLIPSE - hence garnishes the class files with "Unresolved compilation
+    problem"s.
+
 Version 1.2.7 (2016-01-15):
   - Version 1.2.6 was broken because the class files for anonymous classes were missing from the plug-ins' JAR files
     (PDE bug).
