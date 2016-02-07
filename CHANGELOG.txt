@@ -5,8 +5,8 @@ Version 1.2.9 (2016-02-07):
   - WrapMethod: Parameter wrapping was not checked properly.
   - Alignment: The "case group alignment check" now applies not only to "case:" groups, but also to the "default:"
     group.
-  - Whitespace: The default value of "whitespace before" no longer contains "name__param", because in Java 8 lambdas
-    parameters may have NO declared type.
+  - Whitespace: The name of an "inferred lambda parameter" is now a Java element of its own ("NAME__INFERRED_PARAM"),
+    because the "whitespace before" rule must distinguish between the two.
 
 Version 1.2.8 (2016-01-18):
   - PDE uses a different classpath than ECLIPSE - hence garnishes the class files with "Unresolved compilation
