@@ -1,9 +1,12 @@
 
-Version ? (?):
+Version 1.2.9 (2016-02-07):
   - The fix in version 1.2.7 is now obsolete, because the missing anonymous class .class file were only SEEMINGLY the
     reason for the problem.
   - WrapMethod: Parameter wrapping was not checked properly.
-  - Alignment: The "case group alignment check" now applies not only to "case:" groups, but also to the "default:" group.
+  - Alignment: The "case group alignment check" now applies not only to "case:" groups, but also to the "default:"
+    group.
+  - Whitespace: The default value of "whitespace before" no longer contains "name__param", because in Java 8 lambdas
+    parameters may have NO declared type.
 
 Version 1.2.8 (2016-01-18):
   - PDE uses a different classpath than ECLIPSE - hence garnishes the class files with "Unresolved compilation
