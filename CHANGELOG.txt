@@ -1,4 +1,7 @@
 
+Version 1.2.11 (2016-02-19):
+  - NPE on empty method invocation argument list.
+
 Version 1.2.10 (2016-02-19):
   - Continued work on CppCommentAlignment.
   - Added "DEFAULT__MOD" (the modifier "default" for interface method declarations).
