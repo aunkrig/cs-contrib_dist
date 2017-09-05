@@ -1,5 +1,8 @@
 
-Version 1.2.12 (2017-09-02):
+Version 1.2.13 (2017-09-05):
+  - Fixed another compatibility issue with CS 6.19.
+
+Version 1.2.12 (2017-09-05):
   - Added filter "SuppressionRegex".
   - Fixed a compatibility issue with CS 6.19.
 

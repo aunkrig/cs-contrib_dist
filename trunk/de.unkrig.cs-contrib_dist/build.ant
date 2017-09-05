@@ -27,9 +27,13 @@
 			<label text="    * Select the 'Plug-ins' tab." />
 			<label text="       * Hit 'Versions...', then 'Force feature version into plug-in ... manifests'." />
 			<label text="    * Save." />
+			<label text=" * Double-click '/de.unkrig.cs-contrib.updatesite/site.xml'." />
+			<label text="   * Remove the old version of the feature." />
+			<label text="   * Add the new version of the feature." />
+			<label text="   * Save." />
 			<label text=" * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
 			<label text=" * Right click on '/de.unkrig.cs-contrib.updatesite/site.xml'." />
-			<label text="    * Select 'Plug-in Tools' / 'Build Site'." />
+			<label text="    * Select 'Plug-in Tools' / 'Build Site', wait." />
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
 
