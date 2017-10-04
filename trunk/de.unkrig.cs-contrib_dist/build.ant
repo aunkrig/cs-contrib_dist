@@ -264,7 +264,6 @@
 		<de.unkrig.subclipse.svn>
 			<mkdir                                              url="${d}"/>
 			<copy dir="../de.unkrig.checkstyle-configuration" toUrl="${d}"/>
-			<copy dir="../commons-nullanalysis"     toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
