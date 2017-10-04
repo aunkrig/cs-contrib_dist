@@ -3,7 +3,7 @@
 	<property file="local_build.properties"/>
 	<property file="build.properties"/>
 
-	<property name="cv" value="1.2.11" />
+	<property name="cv" value="1.2.10" />
 	<property name="no-template.version" value="1.0.4" />
 
 	<taskdef
@@ -48,24 +48,27 @@
 
 		<echo message="*** Generating the CSDOC documentation..." />
 		<mkdir dir="mirror/csdoc" />
-<!---->
+<!--
 		<eclipse.convertPath resourcePath="no-template-core" property="no-template-core" />
-<!---->
+-->
 		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
-<!--
 			<fileset file="lib/de.unkrig.doclet.cs.jar" />
 			<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
--->
+<!--
 			<pathelement location="../de.unkrig.doclet.cs/bin"            />
 			<pathelement location="../de.unkrig.doclet.cs.annotation/bin" />
+-->
 			<pathelement location="${maven.repo}/de/unkrig/commons/commons-doclet/${cv}/commons-doclet-${cv}.jar" />
 			<pathelement location="${maven.repo}/de/unkrig/commons/commons-io/${cv}/commons-io-${cv}.jar"         />
 			<pathelement location="${maven.repo}/de/unkrig/commons/commons-lang/${cv}/commons-lang-${cv}.jar"     />
 			<pathelement location="${maven.repo}/de/unkrig/commons/commons-util/${cv}/commons-util-${cv}.jar"     />
 			<pathelement location="${maven.repo}/de/unkrig/commons/commons-text/${cv}/commons-text-${cv}.jar"     />
+<!--
 			<pathelement location="${maven.repo}/de/unkrig/no-template-core/${no-template.version}/no-template-core-${no-template.version}.jar" />
+-->
+			<pathelement location="${maven.repo}/de/unkrig/no-template-core/1.0.4/no-template-core-1.0.4.jar"   />
 
 			<!-- Iff rules use 'option providers': -->
 			<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
@@ -101,7 +104,10 @@
 			<classpath>
 
 				<!-- Classes required by the rules: -->
+				<pathelement location="${maven.repo}/de/unkrig/commons/commons-nullanalysis/${cv}/commons-nullanalysis-${cv}.jar"     />
+<!--
 				<dirset  dir="../commons-nullanalysis" includes="target/classes" />
+-->
 
 				<!-- Iff rules use 'option providers': -->
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />

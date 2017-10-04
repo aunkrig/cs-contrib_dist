@@ -1,4 +1,7 @@
 
+Version 1.2.14 (2017-10-04):
+  - cs-contrib is now based on CheckStyle / eclipse-cs version 8.0.0.
+
 Version 1.2.13 (2017-09-05):
   - Fixed another compatibility issue with CS 6.19.
 
