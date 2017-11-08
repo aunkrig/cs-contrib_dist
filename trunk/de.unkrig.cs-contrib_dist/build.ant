@@ -24,7 +24,7 @@
 			<label text=" * Open '/de.unkrig.cs-contrib.feature/feature.xml'." />
 			<label text="    * Select the 'Overview' tab." />
 			<label text="       * Enter a version like '1.2.7.qualifier'." />
-			<label text="    * Select the 'Plug-ins' tab." />
+			<label text="    * Select the 'Included Plug-ins' tab." />
 			<label text="       * Hit 'Versions...', then 'Force feature version into plug-in ... manifests'." />
 			<label text="    * Save." />
 			<label text=" * Double-click '/de.unkrig.cs-contrib.updatesite/site.xml'." />
