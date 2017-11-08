@@ -133,13 +133,17 @@
 			</classpath>
 		</javadoc>
 
-		<echo message="*** Adding the change log..." />
-		<copy file="CHANGELOG.txt" todir="mirror"/>
-
 		<echo message="*** If everything built fine, execute the 'publish' target, and then the 'tag' target." />
 	</target>
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
+
+		<!--
+			Release managers tend to update the CHANGELOG _after_ having eecuted the "build" target - so copy the
+			CHANGELOG only _now_.
+		-->
+		<echo message="*** Adding the change log..." />
+		<copy file="CHANGELOG.txt" todir="mirror"/>
 
 		<echo message="*** Determining the feature version from the previously built update site..." />
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
