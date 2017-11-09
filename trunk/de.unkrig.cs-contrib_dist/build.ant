@@ -27,13 +27,13 @@
 			<label text="    * Select the 'Included Plug-ins' tab." />
 			<label text="       * Hit 'Versions...', then 'Force feature version into plug-in ... manifests'." />
 			<label text="    * Save." />
+			<label text=" * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
 			<label text=" * Double-click '/de.unkrig.cs-contrib.updatesite/site.xml'." />
 			<label text="   * Remove the old version of the feature." />
+			<label text="   * Select the category 'de.unkrig.cs-contrib'." />
 			<label text="   * Add the new version of the feature." />
 			<label text="   * Save." />
-			<label text=" * Remove all of '/de.unkrig.cs-contrib.updatesite/(features,plugins,artifacts.jar,content.jar)'." />
-			<label text=" * Right click on '/de.unkrig.cs-contrib.updatesite/site.xml'." />
-			<label text="    * Select 'Plug-in Tools' / 'Build Site', wait." />
+			<label text="   * Hit 'Build all'." />
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
 
@@ -138,13 +138,6 @@
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
-		<!--
-			Release managers tend to update the CHANGELOG _after_ having eecuted the "build" target - so copy the
-			CHANGELOG only _now_.
-		-->
-		<echo message="*** Adding the change log..." />
-		<copy file="CHANGELOG.txt" todir="mirror"/>
-
 		<echo message="*** Determining the feature version from the previously built update site..." />
 		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
 		<property name="built.feature.version" value="${site.xml.site.feature(version)}"/>
@@ -182,6 +175,9 @@
 			unless="${changelog.contains.description}"
 			message="Please add a description for '${base.version} (${built.date})' in the change log before publishing."
 		/>
+
+		<echo message="*** Adding the change log..." />
+		<copy file="CHANGELOG.txt" todir="mirror"/>
 
 		<swingDialog title="FTP upload of update site">
 			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
