@@ -1,4 +1,7 @@
 
+Version 1.2.16 (2018-01-11):
+  - cs-contrib is now based on CheckStyle / eclipse-cs version 8.5. (CheckStyle Version 8.2 had breaking changes!)
+
 Version 1.2.15 (2017-11-09):
   - CppCommentAlignment check: For statement lists and SWITCH statements, tolerate different alignments if lines are
     not consecutive.

@@ -4,7 +4,10 @@
 	<property file="build.properties"/>
 
 	<property name="cv" value="1.2.10" />
+	<property name="doclet-cs.version" value="1.0.2-SNAPSHOT" />
 	<property name="no-template.version" value="1.0.4" />
+	
+	<property name="checkstyle-all.jar" value="../.metadata/.plugins/org.eclipse.pde.core/.external_libraries/net.sf.eclipsecs.checkstyle_8.5.1.201712211522/checkstyle-8.5-all.jar" />
 
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"
@@ -54,8 +57,8 @@
 		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
-			<fileset file="lib/de.unkrig.doclet.cs.jar" />
-			<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
+			<fileset file="${maven.repo}/de/unkrig/doclet-cs/${doclet-cs.version}/doclet-cs-${doclet-cs.version}.jar" />
+			<fileset file="${maven.repo}/de/unkrig/doclet-cs-annotation/${doclet-cs.version}/doclet-cs-annotation-${doclet-cs.version}.jar" />
 <!--
 			<pathelement location="../de.unkrig.doclet.cs/bin"            />
 			<pathelement location="../de.unkrig.doclet.cs.annotation/bin" />
@@ -71,7 +74,7 @@
 			<pathelement location="${maven.repo}/de/unkrig/no-template-core/1.0.4/no-template-core-1.0.4.jar"   />
 
 			<!-- Iff rules use 'option providers': -->
-			<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
+			<pathelement location="${checkstyle-all.jar}" />
 
 			<!-- Iff there are quickfixes: -->
 			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
@@ -110,7 +113,7 @@
 -->
 
 				<!-- Iff rules use 'option providers': -->
-				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.checkstyle_*/checkstyle-*-all.jar" />
+				<pathelement location="${checkstyle-all.jar}" />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.core_*.jar" />
 
 				<!-- Iff there are quickfixes: -->
