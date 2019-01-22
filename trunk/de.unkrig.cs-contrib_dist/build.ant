@@ -7,7 +7,7 @@
 	<property name="doclet-cs.version" value="1.0.2-SNAPSHOT" />
 	<property name="no-template.version" value="1.0.4" />
 	
-	<property name="checkstyle-all.jar" value="../.metadata/.plugins/org.eclipse.pde.core/.external_libraries/net.sf.eclipsecs.checkstyle_8.5.1.201712211522/checkstyle-8.5-all.jar" />
+	<property name="checkstyle-all.jar" value="../.metadata/.plugins/org.eclipse.pde.core/.external_libraries/net.sf.eclipsecs.checkstyle_8.12.0.201808161509/checkstyle-8.12-all.jar" />
 
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"

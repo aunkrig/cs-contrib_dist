@@ -1,4 +1,7 @@
 
+Version 1.2.17 (2019-01-22):
+  - CS 8.7 changed the return type of "FileContents.getSingleLineComments()" => NoSuchMethodError. Fixed.
+
 Version 1.2.16 (2018-01-11):
   - cs-contrib is now based on CheckStyle / eclipse-cs version 8.5. (CheckStyle Version 8.2 had breaking changes!)
 
