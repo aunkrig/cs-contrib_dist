@@ -36,6 +36,7 @@
 			<label text="   * Select the category 'de.unkrig.cs-contrib'." />
 			<label text="   * Add the new version of the feature." />
 			<label text="   * Save." />
+			<label text="   * Cancel this dialog." />
 			<label text="   * Hit 'Build all'." />
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
