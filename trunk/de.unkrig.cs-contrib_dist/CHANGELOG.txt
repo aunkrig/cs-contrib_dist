@@ -1,4 +1,10 @@
 
+Version 1.2.19 (2019-02-19):
+  - Alignment check: "applyToMethodBody" not only checks the "{", but also the "}".
+
+Version 1.2.18 (2019-01-29):
+  - Eliminated dependency on the "TokenUtil(s)" class.
+
 Version 1.2.17 (2019-01-22):
   - CS 8.7 changed the return type of "FileContents.getSingleLineComments()" => NoSuchMethodError. Fixed.
 
