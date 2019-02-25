@@ -271,6 +271,7 @@
 			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
+			<copy dir="../de.unkrig.cs-contrib.core_test"     toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}"/>
 			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}"/>
 		</de.unkrig.subclipse.svn>
