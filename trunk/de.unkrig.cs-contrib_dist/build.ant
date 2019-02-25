@@ -7,8 +7,6 @@
 	<property name="doclet-cs.version" value="1.0.2-SNAPSHOT" />
 	<property name="no-template.version" value="1.0.4" />
 	
-	<property name="checkstyle-all.jar" value="../.metadata/.plugins/org.eclipse.pde.core/.external_libraries/net.sf.eclipsecs.checkstyle_8.12.0.201808161509/checkstyle-8.12-all.jar" />
-
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"
 		resource="de/unkrig/antcontrib/ant.xml"
@@ -75,7 +73,8 @@
 			<pathelement location="${maven.repo}/de/unkrig/no-template-core/1.0.4/no-template-core-1.0.4.jar"   />
 
 			<!-- Iff rules use 'option providers': -->
-			<pathelement location="${checkstyle-all.jar}" />
+			<pathelement location="${maven.repo}/com/puppycrawl/tools/checkstyle/8.12/checkstyle-8.12.jar" />
+			<pathelement location="${maven.repo}/com/google/guava/guava/22.0/guava-22.0.jar" />
 
 			<!-- Iff there are quickfixes: -->
 			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
@@ -114,7 +113,8 @@
 -->
 
 				<!-- Iff rules use 'option providers': -->
-				<pathelement location="${checkstyle-all.jar}" />
+				<pathelement location="${maven.repo}/com/puppycrawl/tools/checkstyle/8.12/checkstyle-8.12.jar" />
+				<pathelement location="${maven.repo}/com/google/guava/guava/22.0/guava-22.0.jar" />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.core_*.jar" />
 
 				<!-- Iff there are quickfixes: -->
