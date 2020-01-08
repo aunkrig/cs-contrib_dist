@@ -3,10 +3,6 @@
 	<property file="local_build.properties"/>
 	<property file="build.properties"/>
 
-	<property name="cv" value="1.2.10" />
-	<property name="doclet-cs.version" value="1.0.2-SNAPSHOT" />
-	<property name="no-template.version" value="1.0.4" />
-	
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"
 		resource="de/unkrig/antcontrib/ant.xml"
@@ -50,31 +46,26 @@
 
 		<echo message="*** Generating the CSDOC documentation..." />
 		<mkdir dir="mirror/csdoc" />
-<!--
-		<eclipse.convertPath resourcePath="no-template-core" property="no-template-core" />
--->
+
 		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
-			<fileset file="${maven.repo}/de/unkrig/doclet-cs/${doclet-cs.version}/doclet-cs-${doclet-cs.version}.jar" />
-			<fileset file="${maven.repo}/de/unkrig/doclet-cs-annotation/${doclet-cs.version}/doclet-cs-annotation-${doclet-cs.version}.jar" />
+			<fileset file="libs/doclet-cs-1.0.2-SNAPSHOT.jar" />
+			<fileset file="libs/doclet-cs-annotation-1.0.1.jar" />
 <!--
 			<pathelement location="../de.unkrig.doclet.cs/bin"            />
 			<pathelement location="../de.unkrig.doclet.cs.annotation/bin" />
 -->
-			<pathelement location="${maven.repo}/de/unkrig/commons/commons-doclet/${cv}/commons-doclet-${cv}.jar" />
-			<pathelement location="${maven.repo}/de/unkrig/commons/commons-io/${cv}/commons-io-${cv}.jar"         />
-			<pathelement location="${maven.repo}/de/unkrig/commons/commons-lang/${cv}/commons-lang-${cv}.jar"     />
-			<pathelement location="${maven.repo}/de/unkrig/commons/commons-util/${cv}/commons-util-${cv}.jar"     />
-			<pathelement location="${maven.repo}/de/unkrig/commons/commons-text/${cv}/commons-text-${cv}.jar"     />
-<!--
-			<pathelement location="${maven.repo}/de/unkrig/no-template-core/${no-template.version}/no-template-core-${no-template.version}.jar" />
--->
-			<pathelement location="${maven.repo}/de/unkrig/no-template-core/1.0.4/no-template-core-1.0.4.jar"   />
+			<pathelement location="libs/commons-doclet-1.2.14.jar"  />
+			<pathelement location="libs/commons-io-1.2.14.jar"      />
+			<pathelement location="libs/commons-lang-1.2.14.jar"    />
+			<pathelement location="libs/commons-util-1.2.14.jar"    />
+			<pathelement location="libs/commons-text-1.2.14.jar"    />
+			<pathelement location="libs/no-template-core-1.0.5.jar" />
 
 			<!-- Iff rules use 'option providers': -->
-			<pathelement location="${maven.repo}/com/puppycrawl/tools/checkstyle/8.12/checkstyle-8.12.jar" />
-			<pathelement location="${maven.repo}/com/google/guava/guava/22.0/guava-22.0.jar" />
+			<pathelement location="libs/checkstyle-8.21.jar" />
+			<pathelement location="libs/guava-22.0.jar"      />
 
 			<!-- Iff there are quickfixes: -->
 			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
@@ -107,14 +98,11 @@
 			<classpath>
 
 				<!-- Classes required by the rules: -->
-				<pathelement location="${maven.repo}/de/unkrig/commons/commons-nullanalysis/${cv}/commons-nullanalysis-${cv}.jar"     />
-<!--
-				<dirset  dir="../commons-nullanalysis" includes="target/classes" />
--->
+				<pathelement location="libs/commons-nullanalysis-1.2.14.jar" />
 
 				<!-- Iff rules use 'option providers': -->
-				<pathelement location="${maven.repo}/com/puppycrawl/tools/checkstyle/8.12/checkstyle-8.12.jar" />
-				<pathelement location="${maven.repo}/com/google/guava/guava/22.0/guava-22.0.jar" />
+				<pathelement location="libs/checkstyle-8.21.jar" />
+				<pathelement location="libs/guava-22.0.jar"      />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.core_*.jar" />
 
 				<!-- Iff there are quickfixes: -->
