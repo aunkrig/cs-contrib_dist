@@ -1,4 +1,8 @@
 
+Version 1.2.21 (2020-01-08):
+  - Checkstyle had an incompatible change in version 8.21; CS-CONTRIB 1.2.20 works with CS <= 8.20, CS-CONTRIB
+    1.2.21 works with CS >= 8.21. 
+
 Version 1.2.20 (2019-02-25):
   - Whitespace check: Added support for method references, including the distinction between a "normal" NEW and NEW in
     the context of a method reference. 
