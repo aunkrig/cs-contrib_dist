@@ -122,7 +122,7 @@
 				<fileset dir="${osgi.syspath}" includes="org.eclipse.ui.workbench_*.jar"           />
 
 				<!-- The annotations for the CS doclet. -->
-				<fileset file="lib/de.unkrig.doclet.cs.annotation.jar" />
+				<fileset file="libs/doclet-cs-annotation-1.0.1.jar" />
 			</classpath>
 		</javadoc>
 
