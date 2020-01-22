@@ -1,4 +1,9 @@
 
+Version 1.2.22 (2020-01-22):
+  - Moved the cs-contrib core functionality (which is independent from eclipse-cs) to a new GITHUB / MAVEN project
+    "de.unkrig.checkstyle:cs-contrib). THIS project merely wraps that new library.
+  - Fixed one bug that (again) led to strange CS error messages.
+
 Version 1.2.21 (2020-01-08):
   - Checkstyle had an incompatible change in version 8.21; CS-CONTRIB 1.2.20 works with CS <= 8.20, CS-CONTRIB
     1.2.21 works with CS >= 8.21. 
