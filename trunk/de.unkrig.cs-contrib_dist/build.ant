@@ -65,7 +65,7 @@
 			<pathelement location="libs/no-template-core-1.0.5.jar" />
 
 			<!-- Iff rules use 'option providers': -->
-			<pathelement location="libs/checkstyle-8.19.jar" />
+			<pathelement location="libs/checkstyle-8.21.jar" />
 			<pathelement location="libs/guava-22.0.jar"      />
 
 			<!-- Iff there are quickfixes: -->
@@ -103,7 +103,7 @@
 				<pathelement location="libs/commons-nullanalysis-1.2.14.jar" />
 
 				<!-- Iff rules use 'option providers': -->
-				<pathelement location="libs/checkstyle-8.19.jar" />
+				<pathelement location="libs/checkstyle-8.21.jar" />
 				<pathelement location="libs/guava-22.0.jar"      />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.core_*.jar" />
 

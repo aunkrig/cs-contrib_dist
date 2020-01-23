@@ -1,4 +1,7 @@
 
+Version 1.2.23 (2020-01-23):
+  - Now cs-contrib functions both with CS <=8.20 and CS >=8.21.
+
 Version 1.2.22 (2020-01-22):
   - Moved the cs-contrib core functionality (which is independent from eclipse-cs) to a new GITHUB / MAVEN project
     "de.unkrig.checkstyle:cs-contrib). THIS project merely wraps that new library.
