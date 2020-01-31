@@ -1,17 +1,17 @@
 <project>
 
-	<property file="local_build.properties"/>
-	<property file="build.properties"/>
+	<property file="local_build.properties" />
+	<property file="build.properties" />
 
 	<taskdef
 		classpath="lib/de.unkrig.ant-contrib.jar"
 		resource="de/unkrig/antcontrib/ant.xml"
-	/>
+	 />
 
 	<taskdef
 		classpath="lib/ant-contrib-1.0b3.jar"
 		resource="net/sf/antcontrib/antcontrib.properties"
-	/>
+	 />
 
 	<target name="build" description="Builds the update site project">
 
@@ -94,7 +94,6 @@
 			<package name="de.unkrig.cscontrib.filters"       />
 			<package name="de.unkrig.cscontrib.ui.quickfixes" />
 
-			<sourcepath path="../de.unkrig.cs-contrib.core/src" />
 			<sourcepath path="../cs-contrib/src/main/java" />
 
 			<classpath>
@@ -133,8 +132,8 @@
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
 
 		<echo message="*** Determining the feature version from the previously built update site..." />
-		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
-		<property name="built.feature.version" value="${site.xml.site.feature(version)}"/>
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml" />
+		<property name="built.feature.version" value="${site.xml.site.feature(version)}" />
 
 		<echo message="*** Verifying that the base version matches that defined in 'build.properties'..." />
 		<propertyregex
@@ -143,14 +142,14 @@
 			select="\1"
 			property="built.base.version"
 			override="true"
-		/>
+		 />
 		<condition property="base.version.matches">
-			<equals arg1="${built.base.version}" arg2="${base.version}"/>
+			<equals arg1="${built.base.version}" arg2="${base.version}" />
 		</condition>
 		<fail
 			unless="base.version.matches"
 			message="Feature base version (${built.base.version}) and base version in 'build.properties' (${base.version}) don't match."
-		/>
+		 />
 
 		<echo message="*** Verifying that there is a description for the new version in the change log..." />
 		<propertyregex
@@ -159,32 +158,32 @@
 			select="\1-\2-\3"
 			property="built.date"
 			override="true"
-		/>
+		 />
 		<condition property="changelog.contains.description">
 			<isfileselected file="CHANGELOG.txt">
-				<contains text="Version ${base.version} (${built.date}):"/>
+				<contains text="Version ${base.version} (${built.date}):" />
 			</isfileselected>
 		</condition>
 		<fail
 			unless="${changelog.contains.description}"
 			message="Please add a description for '${base.version} (${built.date})' in the change log before publishing."
-		/>
+		 />
 
 		<echo message="*** Adding the change log..." />
-		<copy file="CHANGELOG.txt" todir="mirror"/>
+		<copy file="CHANGELOG.txt" todir="mirror" />
 
 		<swingDialog title="FTP upload of update site">
-			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}"/>
-			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}"/>
-			<label text="User ID:"                  /><text property="ftp.userid"         defaultvalue="${ftp.userid}"/>
-			<label text="Password:"                 /><text property="ftp.password"       defaultvalue="${ftp.password}" secure="true"/>
-			<label text="Proxy server (optional):"  /><text property="ftp.proxy.server"   defaultvalue="${ftp.proxy.server}"/>
-			<label text="Proxy port (optional):"    /><text property="ftp.proxy.port"     defaultvalue="${ftp.proxy.port}"/>
-			<label text="Proxy user ID (optional):" /><text property="ftp.proxy.userid"   defaultvalue="${ftp.proxy.userid}"/>
-			<label text="Proxy password (optional):"/><text property="ftp.proxy.password" defaultvalue="${ftp.proxy.password}" secure="true"/>
-			<label text="Remote directory:"         /><text property="ftp.remotedir"      defaultvalue="${ftp.remotedir}"/>
-			<checkbox text="Use passive FTP"   property="ftp.passive" preselected="true"/>
-			<checkbox text="Verbose reporting" property="ftp.verbose" preselected="true"/>
+			<label text="Server:"                   /><text property="ftp.server"         defaultvalue="${ftp.server}" />
+			<label text="Port (optional):"          /><text property="ftp.port"           defaultvalue="${ftp.port}" />
+			<label text="User ID:"                  /><text property="ftp.userid"         defaultvalue="${ftp.userid}" />
+			<label text="Password:"                 /><text property="ftp.password"       defaultvalue="${ftp.password}" secure="true" />
+			<label text="Proxy server (optional):"  /><text property="ftp.proxy.server"   defaultvalue="${ftp.proxy.server}" />
+			<label text="Proxy port (optional):"    /><text property="ftp.proxy.port"     defaultvalue="${ftp.proxy.port}" />
+			<label text="Proxy user ID (optional):" /><text property="ftp.proxy.userid"   defaultvalue="${ftp.proxy.userid}" />
+			<label text="Proxy password (optional):" /><text property="ftp.proxy.password" defaultvalue="${ftp.proxy.password}" secure="true" />
+			<label text="Remote directory:"         /><text property="ftp.remotedir"      defaultvalue="${ftp.remotedir}" />
+			<checkbox text="Use passive FTP"   property="ftp.passive" preselected="true" />
+			<checkbox text="Verbose reporting" property="ftp.verbose" preselected="true" />
 		</swingDialog>
 
 		<echo message="*** Verifying that the base version does not yet exist on the remote update site..." />
@@ -202,17 +201,17 @@
 			verbose      ="${ftp.verbose}"
 			action       ="list"
 			listing      ="listing.txt"
-		><fileset includes="de.unkrig.cs-contrib_${base.version}.*.jar"/></ftp2>
+		><fileset includes="de.unkrig.cs-contrib_${base.version}.*.jar" /></ftp2>
 		<condition property="feature.exists.on.update.site">
 			<isfileselected file="listing.txt">
-				<size value="0" when="more"/>
+				<size value="0" when="more" />
 			</isfileselected>
 		</condition>
-		<delete file="listing.txt"/>
+		<delete file="listing.txt" />
 		<fail
 			if="${feature.exists.on.update.site}"
 			message="A base version '${base.version}' already exists on the remote update site."
-		/>
+		 />
 
 		<echo message="*** Uploading the mirror site to the remote host..." />
 		<ftp2
@@ -229,7 +228,7 @@
 			verbose      ="${ftp.verbose}"
 			action       ="put"
 		>
-			<fileset dir="mirror"/>
+			<fileset dir="mirror" />
 		</ftp2>
 
 		<echo message="*** If everything went fine, execute the 'tag' target." />
@@ -238,32 +237,32 @@
 	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
 
 		<echo message="*** Determining the version from the feature version in the mirrored 'site.xml' file..." />
-		<xmlproperty file="mirror/update/site.xml" prefix="site.xml"/>
-		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version."/>
-		<property name="version" value="${site.xml.site.feature(version)}"/>
+		<xmlproperty file="mirror/update/site.xml" prefix="site.xml" />
+		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version." />
+		<property name="version" value="${site.xml.site.feature(version)}" />
 
 		<echo message="*** Composing the tag name from the feature name and the version..." />
-		<property name="tag" value="cs-contrib_${version}"/>
-		<echo message="Tagging relevant projects as '${tag}'..."/>
+		<property name="tag" value="cs-contrib_${version}" />
+		<echo message="Tagging relevant projects as '${tag}'..." />
 
-		<fail unless="eclipse.running" message="Please select the ECLIPSE external tool configuration option 'Run in the same JRE as the workspace'."/>
-		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn"/></condition>
-		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'."/>
+		<fail unless="eclipse.running" message="Please select the ECLIPSE external tool configuration option 'Run in the same JRE as the workspace'." />
+		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn" /></condition>
+		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'." />
 
 		<!--
 			Currently it is only possible to copy the WORKING COPY, and not the BASE version - due to a limitation in
 			svnClientAdapter. See http://subclipse.tigris.org/issues/show_bug.cgi?id=1505
 		-->
-		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}"/>
+		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}" />
 		<de.unkrig.subclipse.svn>
-			<mkdir                                              url="${d}"/>
-			<copy dir="../de.unkrig.checkstyle-configuration" toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib.core_test"     toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}"/>
-			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}"/>
+			<mkdir                                              url="${d}" />
+			<copy dir="../de.unkrig.checkstyle-configuration" toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib.core_test"     toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}" />
+			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}" />
 		</de.unkrig.subclipse.svn>
 
 		<echo message="*** Congratulations! You just built, published and tagged cs-contrib successfully." />
