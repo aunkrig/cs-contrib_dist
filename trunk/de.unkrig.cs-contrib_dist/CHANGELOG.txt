@@ -1,4 +1,10 @@
 
+Version 1.2.24 (2020-08-26):
+  - SuppressionRegex filter: Added a parameter "influence", so now this filter is an almost-complete replacement for the
+    Standard SuppressWithNearbyCommentFilter (which is limited to Checker-based checks). (And since CS version 8.21,
+    LineLengthCheck is no longer Checker-based.)
+  - WrapTryCheck: Could not handle TRY statements with *only* a resource specification (and no CATCHES and no FINALLY).
+
 Version 1.2.23 (2020-01-23):
   - Now cs-contrib functions both with CS <=8.20 and CS >=8.21.
 
