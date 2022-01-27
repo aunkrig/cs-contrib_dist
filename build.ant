@@ -13,8 +13,15 @@
 		resource="net/sf/antcontrib/antcontrib.properties"
 	 />
 
-	<target name="build" description="Builds the update site project">
+	<target name="build" description="Builds the update site project" depends="prepare-mirror, update-site, csdoc" />
 
+	<target name="prepare-mirror">
+		<echo message="*** Generating the mirror site..." />
+		<delete dir="mirror" />
+		<mkdir dir="mirror" />
+	</target>
+
+	<target name="update-site" depends="prepare-mirror">
 		<swingDialog>
 			<label text="Before you run this target, be sure that you have executed the following steps:" />
 			<label text=" * Execute the 'de.unkrig.cs-contrib.core generate' target." />
@@ -36,14 +43,13 @@
 			<label text="If not, hit CANCEL, execute the steps, then execute this target again." />
 		</swingDialog>
 
-		<echo message="*** Generating the mirror site..." />
-		<delete dir="mirror" />
-		<mkdir dir="mirror" />
-
 		<mkdir dir="mirror/update" />
 		<copy todir="mirror/update">
 			<fileset dir="../de.unkrig.cs-contrib.updatesite" excludes=".*,logs.zip" />
 		</copy>
+	</target>
+
+	<target name="csdoc" depends="prepare-mirror">
 
 		<echo message="*** Generating the CSDOC documentation..." />
 		<mkdir dir="mirror/csdoc" />
@@ -51,7 +57,7 @@
 		<path id="cs.doclet.path">
 
 			<!-- CS doclet: -->
-			<fileset file="libs/doclet-cs-1.1.0.jar" />
+			<fileset file="libs/doclet-cs-1.1.2.jar" />
 			<fileset file="libs/doclet-cs-annotation-1.1.0.jar" />
 <!--
 			<pathelement location="../de.unkrig.doclet.cs/bin"            />
@@ -66,7 +72,6 @@
 
 			<!-- Iff rules use 'option providers': -->
 			<pathelement location="libs/checkstyle-8.21.jar" />
-			<pathelement location="libs/guava-22.0.jar"      />
 
 			<!-- Iff there are quickfixes: -->
 			<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
@@ -85,7 +90,7 @@
 			doclet="de.unkrig.doclet.cs.CsDoclet"
 			windowtitle="de.unkrig.cs-doclet"
 			doctitle="de.unkrig.cs-doclet"
-			overview="../de.unkrig.cs-contrib.core/src/overview.html"
+			overview="../cs-contrib/src/main/java/overview.html"
 			destdir="mirror/csdoc"
 		>
 
@@ -94,7 +99,10 @@
 			<package name="de.unkrig.cscontrib.filters"       />
 			<package name="de.unkrig.cscontrib.ui.quickfixes" />
 
-			<sourcepath path="../cs-contrib/src/main/java" />
+			<sourcepath>
+				<pathelement location="../cs-contrib/src/main/java"      />
+				<pathelement location="../de.unkrig.cs-contrib.core/src" />
+			</sourcepath>
 
 			<classpath>
 
@@ -103,10 +111,10 @@
 
 				<!-- Iff rules use 'option providers': -->
 				<pathelement location="libs/checkstyle-8.21.jar" />
-				<pathelement location="libs/guava-22.0.jar"      />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.core_*.jar" />
 
 				<!-- Iff there are quickfixes: -->
+				<dirset  dir="../de.unkrig.cs-contrib.core" includes="bin" />
 				<fileset dir="${osgi.syspath}" includes="net.sf.eclipsecs.ui_*.jar"                />
 				<fileset dir="${osgi.syspath}" includes="org.eclipse.core.filebuffers_*.jar"       />
 				<fileset dir="${osgi.syspath}" includes="org.eclipse.core.resources_*.jar"         />
@@ -126,7 +134,7 @@
 			</classpath>
 		</javadoc>
 
-		<echo message="*** If everything built fine, execute the 'publish' target, and then the 'tag' target." />
+		<echo message="*** If everything built fine, execute the 'publish' target." />
 	</target>
 
 	<target name="publish" description="Uploads './mirror' to 'unkrig.de/cs-contrib'">
@@ -231,40 +239,6 @@
 			<fileset dir="mirror" />
 		</ftp2>
 
-		<echo message="*** If everything went fine, execute the 'tag' target." />
-	</target>
-
-	<target name="tag" description="Tags all projects as the version declared in 'site.xml'">
-
-		<echo message="*** Determining the version from the feature version in the mirrored 'site.xml' file..." />
-		<xmlproperty file="mirror/update/site.xml" prefix="site.xml" />
-		<fail unless="site.xml.site.feature(version)" message="Could not determine the previously built version." />
-		<property name="version" value="${site.xml.site.feature(version)}" />
-
-		<echo message="*** Composing the tag name from the feature name and the version..." />
-		<property name="tag" value="cs-contrib_${version}" />
-		<echo message="Tagging relevant projects as '${tag}'..." />
-
-		<fail unless="eclipse.running" message="Please select the ECLIPSE external tool configuration option 'Run in the same JRE as the workspace'." />
-		<condition property="de.unkrig.subclipse.svn.exists"><typefound name="de.unkrig.subclipse.svn" /></condition>
-		<fail unless="de.unkrig.subclipse.svn.exists" message="Please install the 'de.unkrig.subclipse' feature from 'http://subclipse.unkrig.de/update'." />
-
-		<!--
-			Currently it is only possible to copy the WORKING COPY, and not the BASE version - due to a limitation in
-			svnClientAdapter. See http://subclipse.tigris.org/issues/show_bug.cgi?id=1505
-		-->
-		<property name="d" value="https://svn.code.sf.net/p/loggifier/code/tags/${tag}" />
-		<de.unkrig.subclipse.svn>
-			<mkdir                                              url="${d}" />
-			<copy dir="../de.unkrig.checkstyle-configuration" toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib_dist"          toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib.branding"      toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib.core"          toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib.core_test"     toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib.feature"       toUrl="${d}" />
-			<copy dir="../de.unkrig.cs-contrib.updatesite"    toUrl="${d}" />
-		</de.unkrig.subclipse.svn>
-
-		<echo message="*** Congratulations! You just built, published and tagged cs-contrib successfully." />
+		<echo message="*** If everything went fine, create a branch for this version on GITHUB." />
 	</target>
 </project>

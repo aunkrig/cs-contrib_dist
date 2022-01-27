@@ -16,6 +16,5 @@ Then run
 
     launch/de.unkrig.cs-contrib_dist build.ant build.launch
     launch/de.unkrig.cs-contrib_dist build.ant build.publish
-    launch/de.unkrig.cs-contrib_dist build.ant build.tag
 
-, and it will tell you the detailed step that are required.
+, and it will tell you the detailed steps that are required.
